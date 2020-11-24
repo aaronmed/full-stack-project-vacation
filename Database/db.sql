@@ -33,12 +33,13 @@ FOREIGN KEY (idHostUser) REFERENCES user (id)
 );
 
 CREATE TABLE book (
+id bigint AUTO_INCREMENT,
 idUser bigint,
 idAdvert bigint,
 startDate date,
 endDate date,
 
-PRIMARY KEY (idUser, idAdvert, startDate, endDate),
+PRIMARY KEY (id),
 FOREIGN KEY (idUser) REFERENCES user (id),
 FOREIGN KEY (idAdvert) REFERENCES advert (id)
 );
