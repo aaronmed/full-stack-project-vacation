@@ -1,0 +1,25 @@
+type Advert {
+	id: ID!,
+	description: String,
+	address: String,
+	datePublished: String,
+	priceByNight: Float,
+	numGuest: Int,
+	numBathroom: Int,
+	numBedroom: Int,
+	numBed: Int,
+	idHostUser: String
+}
+
+"""
+extends type Query {
+	advert: [Advert],
+	advert(id: ID): Advert
+}
+
+extends type Mutation {
+	createAdvert(descritpion: String, address: String, datePublished: String, priceByNight: Float, numGuest: Int, numBathroom: Int, numBedroom: Int, numBed: Int, idHostUser, Int): Advert
+}
+"""
+
+

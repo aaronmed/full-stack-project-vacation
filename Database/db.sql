@@ -25,7 +25,7 @@ priceByNight float,
 numGuest tinyint,
 numBathroom tinyint,
 numBedroom tinyint,
-numBeds tinyint,
+numBed tinyint,
 idHostUser bigint,
 
 PRIMARY KEY (id),

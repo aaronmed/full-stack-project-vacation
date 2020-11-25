@@ -1,0 +1,9 @@
+scalar Date
+
+type Review {
+	id: ID!,
+	description: String,
+	stars: Int,
+	reviewDate: Date,
+	idAdvert: String
+}

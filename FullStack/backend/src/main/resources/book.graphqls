@@ -1,0 +1,9 @@
+scalar Date
+
+type Book {
+	id: ID!,
+	idUser: String,
+	idAdvert: String,
+	startDate: Date,
+	endDate: Date
+}
