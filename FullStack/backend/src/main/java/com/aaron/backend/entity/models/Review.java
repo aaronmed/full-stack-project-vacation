@@ -1,7 +1,7 @@
 package com.aaron.backend.entity.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,21 +27,29 @@ public class Review implements Serializable {
 	private int stars;
 	
 	@Column
-	private Date reviewDate;
+	private LocalDate date;
 	
 	@Column
-	private long idAdvert;
+	private long advert;
 	
 	public Review() {
 		
 	}
 
-	public Review(String description, int stars, Date reviewDate, long idAdvert) {
+	public Review(String description, int stars, LocalDate date, long advert) {
 		super();
 		this.description = description;
 		this.stars = stars;
-		this.reviewDate = reviewDate;
-		this.idAdvert = idAdvert;
+		this.date = date;
+		this.advert = advert;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getDescription() {
@@ -60,19 +68,19 @@ public class Review implements Serializable {
 		this.stars = stars;
 	}
 
-	public Date getReviewDate() {
-		return reviewDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setReviewDate(Date reviewDate) {
-		this.reviewDate = reviewDate;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
-	public long getIdAdvert() {
-		return idAdvert;
+	public long getAdvert() {
+		return advert;
 	}
 
-	public void setIdAdvert(long idAdvert) {
-		this.idAdvert = idAdvert;
+	public void setAdvert(long advert) {
+		this.advert = advert;
 	}
 }

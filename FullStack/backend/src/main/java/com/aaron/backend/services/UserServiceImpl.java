@@ -31,13 +31,13 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void updateUser(long id, User user) {
+	public User updateUser(long id, User user) {
 		Optional<User> userInDB = userDao.findById(id);
 		
 		if(userInDB.isPresent()) {
 			user.setId(userInDB.get().getId());
-			userDao.save(user);
 		}
+		return userDao.save(user);
 	}
 
 	@Override

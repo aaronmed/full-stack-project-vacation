@@ -20,37 +20,37 @@ CREATE TABLE advert (
 id bigint AUTO_INCREMENT,
 description varchar(100),
 address varchar(45),
-datePublished date,
-priceByNight float,
-numGuest tinyint,
-numBathroom tinyint,
-numBedroom tinyint,
-numBed tinyint,
-idHostUser bigint,
+published date,
+price float,
+guests tinyint,
+bathrooms tinyint,
+bedrooms tinyint,
+beds tinyint,
+user bigint,
 
 PRIMARY KEY (id),
-FOREIGN KEY (idHostUser) REFERENCES user (id)
+FOREIGN KEY (user) REFERENCES user (id)
 );
 
 CREATE TABLE book (
 id bigint AUTO_INCREMENT,
-idUser bigint,
-idAdvert bigint,
-startDate date,
-endDate date,
+user bigint,
+advert bigint,
+start date,
+end date,
 
 PRIMARY KEY (id),
-FOREIGN KEY (idUser) REFERENCES user (id),
-FOREIGN KEY (idAdvert) REFERENCES advert (id)
+FOREIGN KEY (user) REFERENCES user (id),
+FOREIGN KEY (advert) REFERENCES advert (id)
 );
 
 CREATE TABLE reviews (
 id bigint AUTO_INCREMENT,
 description varchar(100),
 starts tinyint,
-reviewDate datetime,
-idAdvert bigint,
+review datetime,
+advert bigint,
 
-FOREIGN KEY (idAdvert) REFERENCES advert (id),
+FOREIGN KEY (advert) REFERENCES advert (id),
 PRIMARY KEY (id)
 );

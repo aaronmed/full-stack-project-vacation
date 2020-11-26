@@ -1,7 +1,7 @@
 package com.aaron.backend.entity.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,58 +21,66 @@ public class Book implements Serializable {
 	private long id;
 	
 	@Column
-	private long idUser;
+	private long user;
 	
 	@Column
-	private long idAdvert;
+	private long advert;
 	
 	@Column
-	private Date startDate;
+	private LocalDate start;
 	
 	@Column
-	private Date endDate;
+	private LocalDate end;
 	
 	public Book() {
 		
 	}
 
-	public Book(long idUser, long idAdvert, Date startDate, Date endDate) {
+	public Book(long user, long advert, LocalDate start, LocalDate end) {
 		super();
-		this.idUser = idUser;
-		this.idAdvert = idAdvert;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.user = user;
+		this.advert = advert;
+		this.start = start;
+		this.end = end;
 	}
 
-	public long getIdUser() {
-		return idUser;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdUser(long idUser) {
-		this.idUser = idUser;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public long getIdAdvert() {
-		return idAdvert;
+	public long getUser() {
+		return user;
 	}
 
-	public void setIdAdvert(long idAdvert) {
-		this.idAdvert = idAdvert;
+	public void setUser(long user) {
+		this.user = user;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public long getAdvert() {
+		return advert;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setAdvert(long advert) {
+		this.advert = advert;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public LocalDate getStart() {
+		return start;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setStart(LocalDate start) {
+		this.start = start;
+	}
+
+	public LocalDate getEnd() {
+		return end;
+	}
+
+	public void setEnd(LocalDate end) {
+		this.end = end;
 	}
 }

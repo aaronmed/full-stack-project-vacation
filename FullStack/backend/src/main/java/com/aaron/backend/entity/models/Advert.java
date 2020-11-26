@@ -1,7 +1,7 @@
 package com.aaron.backend.entity.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,59 +9,68 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 @Entity
 @Table(name = "advert")
 public class Advert implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Column
 	private String description;
-	
+
 	@Column
 	private String address;
-	
+
 	@Column
-	private Date datePublished;
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	private LocalDate published;
+
 	@Column
-	private float priceByNight;
-	
+	private float price;
+
 	@Column
-	private int numGuest;
-	
+	private int guests;
+
 	@Column
-	private int numBathroom;
-	
+	private int bathrooms;
+
 	@Column
-	private int numBedroom;
-	
+	private int bedrooms;
+
 	@Column
-	private int numBed;
-	
+	private int beds;
+
 	@Column
-	private long idHostUser;
-	
+	private long user;
+
 	public Advert() {
-		
+
 	}
 
-	public Advert(String description, String address, Date datePublished, float priceByNight, int numGuest,
-			int numBathroom, int numBedroom, int numBed, long idHostUser) {
+	public Advert(String description, String address, LocalDate published, float price, int guests, int bathrooms,
+			int bedrooms, int beds, long user) {
 		super();
 		this.description = description;
 		this.address = address;
-		this.datePublished = datePublished;
-		this.priceByNight = priceByNight;
-		this.numGuest = numGuest;
-		this.numBathroom = numBathroom;
-		this.numBedroom = numBedroom;
-		this.numBed = numBed;
-		this.idHostUser = idHostUser;
+		this.published = published;
+		this.price = price;
+		this.guests = guests;
+		this.bathrooms = bathrooms;
+		this.bedrooms = bedrooms;
+		this.beds = beds;
+		this.user = user;
 	}
 
 	public long getId() {
@@ -88,59 +97,59 @@ public class Advert implements Serializable {
 		this.address = address;
 	}
 
-	public Date getDatePublished() {
-		return datePublished;
+	public LocalDate getPublished() {
+		return published;
 	}
 
-	public void setDatePublished(Date datePublished) {
-		this.datePublished = datePublished;
+	public void setPublished(LocalDate published) {
+		this.published = published;
 	}
 
-	public float getPriceByNight() {
-		return priceByNight;
+	public float getPrice() {
+		return price;
 	}
 
-	public void setPriceByNight(float priceByNight) {
-		this.priceByNight = priceByNight;
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
-	public int getNumGuest() {
-		return numGuest;
+	public int getGuests() {
+		return guests;
 	}
 
-	public void setNumGuest(int numGuest) {
-		this.numGuest = numGuest;
+	public void setGuests(int guests) {
+		this.guests = guests;
 	}
 
-	public int getNumBathroom() {
-		return numBathroom;
+	public int getBathrooms() {
+		return bathrooms;
 	}
 
-	public void setNumBathroom(int numBathroom) {
-		this.numBathroom = numBathroom;
+	public void setBathrooms(int bathrooms) {
+		this.bathrooms = bathrooms;
 	}
 
-	public int getNumBedroom() {
-		return numBedroom;
+	public int getBedrooms() {
+		return bedrooms;
 	}
 
-	public void setNumBedroom(int numBedroom) {
-		this.numBedroom = numBedroom;
+	public void setBedrooms(int bedrooms) {
+		this.bedrooms = bedrooms;
 	}
 
-	public int getNumBed() {
-		return numBed;
+	public int getBeds() {
+		return beds;
 	}
 
-	public void setNumBed(int numBed) {
-		this.numBed = numBed;
+	public void setBeds(int beds) {
+		this.beds = beds;
 	}
 
-	public long getIdHostUser() {
-		return idHostUser;
+	public long getUser() {
+		return user;
 	}
 
-	public void setIdHostUser(long idHostUser) {
-		this.idHostUser = idHostUser;
+	public void setUser(long user) {
+		this.user = user;
 	}
 }
