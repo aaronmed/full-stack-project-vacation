@@ -11,37 +11,37 @@ import com.aaron.backend.entity.models.Advert;
 
 @Service
 public class AdvertServiceImpl implements IAdvertService {
-	
+
 	@Autowired
 	private IAdvertDao advertDao;
-	
+
 	@Override
-	public List<Advert> getAll(){
+	public List<Advert> getAll() {
 		return (List<Advert>) advertDao.findAll();
 	}
-	
+
 	@Override
 	public Advert addAdvert(Advert advert) {
 		return advertDao.save(advert);
 	}
-	
+
 	@Override
 	public void deleteAdvert(long id) {
 		advertDao.deleteById(id);
 	}
-	
+
 	@Override
-	public void updateAdvert(long id, Advert advert) {
+	public Advert updateAdvert(long id, Advert advert) {
 		Optional<Advert> advertInDB = advertDao.findById(id);
-		
-		if(advertInDB.isPresent()) {
+
+		if (advertInDB.isPresent()) {
 			advert.setId(advertInDB.get().getId());
-			advertDao.save(advert);
 		}
+		return advertDao.save(advert);
 	}
-	
+
 	@Override
-	public Optional<Advert> getAdvertById(long id){
+	public Optional<Advert> getAdvertById(long id) {
 		return advertDao.findById(id);
 	}
 

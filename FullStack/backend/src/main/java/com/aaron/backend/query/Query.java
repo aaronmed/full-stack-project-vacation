@@ -7,9 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aaron.backend.services.IAdvertService;
+import com.aaron.backend.services.IBookService;
+import com.aaron.backend.services.IReviewService;
 import com.aaron.backend.services.IUserService;
+
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+
 import com.aaron.backend.entity.models.Advert;
+import com.aaron.backend.entity.models.Book;
+import com.aaron.backend.entity.models.Review;
 import com.aaron.backend.entity.models.User;
 
 @Component
@@ -20,6 +26,12 @@ public class Query implements GraphQLQueryResolver {
 	
 	@Autowired
 	private IAdvertService advertService;
+	
+	@Autowired
+	private IBookService bookService;
+	
+	@Autowired
+	private IReviewService reviewService;
 	
 	public List<Advert> getAdverts(){
 		return advertService.getAll();
@@ -37,4 +49,19 @@ public class Query implements GraphQLQueryResolver {
 		return userService.getUserById(id);
 	}
 	
+	public List<Book> getBooks(){
+		return bookService.getAll();
+	}
+	
+	public Optional<Book> getBook(final long id){
+		return bookService.getBookById(id);
+	}
+	
+	public List<Review> getReviews(){
+		return reviewService.getAll();
+	}
+	
+	public Optional<Review> getReview(final long id){
+		return reviewService.getReviewById(id);
+	}
 }

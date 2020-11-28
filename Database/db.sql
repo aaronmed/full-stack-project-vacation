@@ -44,11 +44,11 @@ FOREIGN KEY (user) REFERENCES user (id),
 FOREIGN KEY (advert) REFERENCES advert (id)
 );
 
-CREATE TABLE reviews (
+CREATE TABLE review (
 id bigint AUTO_INCREMENT,
 description varchar(100),
-starts tinyint,
-review datetime,
+stars tinyint,
+published date,
 advert bigint,
 
 FOREIGN KEY (advert) REFERENCES advert (id),

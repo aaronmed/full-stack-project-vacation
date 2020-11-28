@@ -27,7 +27,7 @@ public class Review implements Serializable {
 	private int stars;
 	
 	@Column
-	private LocalDate date;
+	private LocalDate published;
 	
 	@Column
 	private long advert;
@@ -36,11 +36,11 @@ public class Review implements Serializable {
 		
 	}
 
-	public Review(String description, int stars, LocalDate date, long advert) {
+	public Review(String description, int stars, LocalDate published, long advert) {
 		super();
 		this.description = description;
 		this.stars = stars;
-		this.date = date;
+		this.published = published;
 		this.advert = advert;
 	}
 
@@ -68,12 +68,12 @@ public class Review implements Serializable {
 		this.stars = stars;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getPublished() {
+		return published;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setPublished(LocalDate published) {
+		this.published = published;
 	}
 
 	public long getAdvert() {

@@ -15,6 +15,6 @@ public interface IAdvertService {
 	
 	public void deleteAdvert(long id);
 	
-	public void updateAdvert(long id, Advert advert);
+	public Advert updateAdvert(long id, Advert advert);
 
 }

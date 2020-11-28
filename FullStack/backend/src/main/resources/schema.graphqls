@@ -27,7 +27,7 @@ type Review {
 	id: ID!,
 	description: String,
 	stars: Int,
-	review: Date,
+	published: Date,
 	advert: Int
 }
 
@@ -44,14 +44,24 @@ type Query {
 	users: [User],
 	user(id: ID): User,
 	adverts: [Advert],
-	advert(id: ID): Advert
-	
+	advert(id: ID): Advert,
+	books: [Book],
+	book(id: ID): Book,
+	reviews: [Review],
+	review(id: ID): Review
 }
 
 type Mutation {
 	createUser(username: String, password: String, name: String, surname: String, dni: String, telephone: String): User
 	deleteUser(id: ID): Boolean
 	updateUser(id: ID, username: String, password: String, name: String, surname: String, dni: String, telephone: String): User
-	createAdvert(description: String, address: String, published: Date, price: Float, guests: Int, bathrooms: Int, bedrooms: Int, beds: Int, user: Int): Advert
+	createAdvert(description: String, address: String, published: String, price: Float, guests: Int, bathrooms: Int, bedrooms: Int, beds: Int, user: Int): Advert
+	updateAdvert(id: ID, description: String, address: String, published: String, price: Float, guests: Int, bathrooms: Int, bedrooms: Int, beds: Int, user: Int): Advert
 	deleteAdvert(id: ID): Boolean
+	createBook(user: Int, advert: Int, start: String, end: String): Book
+	updateBook(id: ID, user: Int, advert: Int, start: String, end:String): Book
+	deleteBook(id: ID): Boolean
+	createReview(description: String, stars: Int, published: String, advert: Int): Review
+	updateReview(id: ID, description: String, stars: Int, published: String, advert: Int): Review
+	deleteReview(id: ID): Boolean
 }
