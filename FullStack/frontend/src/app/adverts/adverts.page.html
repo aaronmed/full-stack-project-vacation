@@ -11,8 +11,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-button>Filtros</ion-button>
-  <ion-card>
+  <ion-button color="success" href="/filters">Filtros</ion-button>
+  <ion-card href="/details">
     <ion-card-header>
       <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
       <ion-card-title>Card Title</ion-card-title>
@@ -22,45 +22,5 @@
       Keep close to Nature's heart... and break clear away, once in awhile,
       and climb a mountain or spend a week in the woods. Wash your spirit clean.
     </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-item class="ion-activated">
-      <ion-label>Camas</ion-label>
-      <ion-button color="success" (click)="decrement()">-</ion-button>
-      {{currentNumber}}
-      <ion-button color="success" (click)="increment()">+</ion-button>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Dormitorios</ion-label>
-      <ion-button color="success" (click)="decrement()">-</ion-button>
-      {{currentNumber}}
-      <ion-button color="success" (click)="increment()">+</ion-button>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Baños</ion-label>
-      <ion-button color="success" (click)="decrement()">-</ion-button>
-      {{currentNumber}}
-      <ion-button color="success" (click)="increment()">+</ion-button>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Huéspedes</ion-label>
-      <ion-button color="success" (click)="decrement()">-</ion-button>
-      {{currentNumber}}
-      <ion-button color="success" (click)="increment()">+</ion-button>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Precio mín.</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Precio máx.</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
   </ion-card>
 </ion-content>

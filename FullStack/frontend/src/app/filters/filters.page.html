@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-item slot="end" href="/log-in">
+      Iniciar sesión
+    </ion-item>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item class="ion-activated">
+      <ion-label>Camas</ion-label>
+      <ion-icon (click)="decrement()" name="remove-circle-outline"></ion-icon>
+      {{currentNumber}}
+      <ion-icon (click)="increment()" name="add-circle-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Dormitorios</ion-label>
+      <ion-icon (click)="decrement()" name="remove-circle-outline"></ion-icon>
+      {{currentNumber}}
+      <ion-icon (click)="increment()" name="add-circle-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Baños</ion-label>
+      <ion-icon (click)="decrement()" name="remove-circle-outline"></ion-icon>
+      {{currentNumber}}
+      <ion-icon (click)="increment()" name="add-circle-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Huéspedes</ion-label>
+      <ion-icon (click)="decrement()" name="remove-circle-outline"></ion-icon>
+      {{currentNumber}}
+      <ion-icon (click)="increment()" name="add-circle-outline"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Precio mín.</ion-label>
+      <ion-input type="number"></ion-input>€
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Precio máx.</ion-label>
+      <ion-input type="number"></ion-input>€
+    </ion-item>
+  </ion-card>
+  <ion-button href="/adverts" color="success" expand="block">Buscar</ion-button>
+</ion-content>
