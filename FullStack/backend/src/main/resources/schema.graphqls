@@ -20,7 +20,7 @@ type Advert {
 	bathrooms: Int,
 	bedrooms: Int,
 	beds: Int,
-	user: Int
+	user: User
 }
 
 type Review {
@@ -28,14 +28,14 @@ type Review {
 	description: String,
 	stars: Int,
 	published: Date,
-	advert: Int
+	advert: Advert
 }
 
 
 type Book {
 	id: ID!,
-	user: Int,
-	advert: Int,
+	user: User,
+	advert: Advert,
 	start: Date,
 	end: Date
 }

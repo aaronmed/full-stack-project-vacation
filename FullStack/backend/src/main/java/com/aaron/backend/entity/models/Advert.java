@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -43,16 +45,17 @@ public class Advert implements Serializable {
 
 	@Column
 	private int beds;
-
-	@Column
-	private long user;
+	
+	@ManyToOne
+	@JoinColumn(name = "user")
+	private User user;
 
 	public Advert() {
 
 	}
 
 	public Advert(String description, String address, LocalDate published, float price, int guests, int bathrooms,
-			int bedrooms, int beds, long user) {
+			int bedrooms, int beds, User user) {
 		super();
 		this.description = description;
 		this.address = address;
@@ -137,11 +140,11 @@ public class Advert implements Serializable {
 		this.beds = beds;
 	}
 
-	public long getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(long user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 }

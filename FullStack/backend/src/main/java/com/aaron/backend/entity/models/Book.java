@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,11 +22,13 @@ public class Book implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column
-	private long user;
+	@ManyToOne
+	@JoinColumn(name = "user")
+	private User user;
 	
-	@Column
-	private long advert;
+	@ManyToOne
+	@JoinColumn(name = "advert")
+	private Advert advert;
 	
 	@Column
 	private LocalDate start;
@@ -36,7 +40,7 @@ public class Book implements Serializable {
 		
 	}
 
-	public Book(long user, long advert, LocalDate start, LocalDate end) {
+	public Book(User user, Advert advert, LocalDate start, LocalDate end) {
 		super();
 		this.user = user;
 		this.advert = advert;
@@ -52,19 +56,19 @@ public class Book implements Serializable {
 		this.id = id;
 	}
 
-	public long getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(long user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public long getAdvert() {
+	public Advert getAdvert() {
 		return advert;
 	}
 
-	public void setAdvert(long advert) {
+	public void setAdvert(Advert advert) {
 		this.advert = advert;
 	}
 
