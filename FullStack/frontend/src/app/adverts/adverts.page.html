@@ -12,15 +12,14 @@
 
 <ion-content>
   <ion-button color="success" href="/filters">Filtros</ion-button>
-  <ion-card href="/details">
+  <ion-card *ngFor="let advert of adverts" href="/details">
     <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>Card Title</ion-card-title>
+      <ion-card-title>{{advert.description}}</ion-card-title>
+      <ion-card-subtitle>{{advert.price}}€</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      Keep close to Nature's heart... and break clear away, once in awhile,
-      and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      {{advert.guests}} huéspedes - {{advert.bathrooms}} baños - {{advert.beds}} camas - {{advert.bedrooms}} habitaciones 
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { Advert } from '../models/advert';
 
 @Component({
   selector: 'app-adverts',
@@ -7,10 +9,36 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./adverts.page.scss'],
 })
 export class AdvertsPage implements OnInit {
+  adverts: any[];
+  loading = true;
+  error: any;
 
-  constructor() { }
+  constructor(private apollo: Apollo) { }
 
   ngOnInit() {
+    this.apollo
+    .watchQuery({
+      query: gql`
+      {
+      adverts {
+        description,
+        address,
+        published,  
+        price,
+        guests,
+        bedrooms,
+        bathrooms,
+        beds
+      }
+    }
+      `,
+    })
+    .valueChanges.subscribe((result:  any) => {
+      this.adverts = result.data.adverts;
+      this.loading = result.loading;
+      this.error = result.error;
+      console.log(result.data.adverts);
+    });
   }
 
 }
