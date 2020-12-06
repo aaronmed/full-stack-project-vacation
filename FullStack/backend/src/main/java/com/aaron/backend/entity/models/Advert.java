@@ -49,6 +49,7 @@ public class Advert implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user")
 	private User user;
+	
 
 	public Advert() {
 

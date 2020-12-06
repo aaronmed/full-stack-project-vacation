@@ -48,7 +48,9 @@ type Query {
 	books: [Book],
 	book(id: ID): Book,
 	reviews: [Review],
-	review(id: ID): Review
+	review(id: ID): Review,
+	advertReviews(advert: ID): [Review],
+	advertFilters(address: String): [Advert]
 }
 
 type Mutation {

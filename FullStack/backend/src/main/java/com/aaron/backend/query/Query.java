@@ -1,5 +1,6 @@
 package com.aaron.backend.query;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +64,27 @@ public class Query implements GraphQLQueryResolver {
 	
 	public Optional<Review> getReview(final long id){
 		return reviewService.getReviewById(id);
+	}
+	
+	public List<Review> getAdvertReviews(int id){
+		List<Review> allReviews = reviewService.getAll();
+		List<Review> advertReviews = new ArrayList<Review>();
+		for (Review r: allReviews) {
+			if(r.getAdvert().getId() == id) {
+				advertReviews.add(r);
+			}
+		}
+		return advertReviews;
+	}
+	
+	public List<Advert> getAdvertFilters(String address){
+		List<Advert> allAdverts = advertService.getAll();
+		List<Advert> advertsWithFilters = new ArrayList<Advert>();
+		for (Advert a: allAdverts) {
+			if(a.getAddress().equals(address)) {
+				advertsWithFilters.add(a);
+			}
+		}
+		return advertsWithFilters;
 	}
 }
