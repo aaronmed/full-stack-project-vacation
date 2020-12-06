@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { Advert } from '../models/advert';
+import { AdvertsService } from '../services/adverts.service';
 
 @Component({
   selector: 'app-adverts',
@@ -10,17 +12,27 @@ import { Advert } from '../models/advert';
 })
 export class AdvertsPage implements OnInit {
   adverts: any[];
-  loading = true;
-  error: any;
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService) { }
 
   ngOnInit() {
+    //this.getAdverts();
+    this.getAdvertsWithFilters();
+  }
+
+  showDetails(id: number) {
+    this.router.navigateByUrl("/details");
+    this.advertService.setCurrentAdvertId(id);
+    console.log(id);
+  }
+
+  getAdverts() {
     this.apollo
-    .watchQuery({
-      query: gql`
+      .watchQuery({
+        query: gql`
       {
       adverts {
+        id,
         description,
         address,
         published,  
@@ -28,17 +40,49 @@ export class AdvertsPage implements OnInit {
         guests,
         bedrooms,
         bathrooms,
-        beds
+        beds,
+        user {
+          name
+        }
       }
     }
       `,
-    })
-    .valueChanges.subscribe((result:  any) => {
-      this.adverts = result.data.adverts;
-      this.loading = result.loading;
-      this.error = result.error;
-      console.log(result.data.adverts);
-    });
+      })
+      .valueChanges.subscribe((result: any) => {
+        this.adverts = result.data.adverts;
+        //console.log(result.data.adverts);
+      });
   }
 
+  getAdvertsWithFilters() {
+    this.apollo
+    .watchQuery({
+      query: gql`
+    query advert($address: String){
+      advertFilters(address: $address) {
+        id,
+        description,
+        address,
+        published,  
+        price,
+        guests,
+        bedrooms,
+        bathrooms,
+        beds,
+        user {
+          name
+        }
+      }
+    }
+    `,
+      variables: {
+        address: this.advertService.getAddress(),
+      },
+    })
+    .valueChanges.subscribe((result: any) => {
+      this.adverts = result.data.advertFilters; 
+      console.log(this.adverts);
+      console.log(this.advertService.getAddress());
+    });
+  }
 }

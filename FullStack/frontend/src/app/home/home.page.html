@@ -19,21 +19,29 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item>
-    <ion-label position="stacked">Ubicación</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Llegada</ion-label>
-    <ion-datetime placeholder="Select Date"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>Salida</ion-label>
-    <ion-datetime placeholder="Select Date"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Nº de huéspedes</ion-label>
-    <ion-input type="number"></ion-input>
-  </ion-item>
-  <ion-button color="success" expand="block" href="/adverts">Buscar</ion-button>
+  <form [formGroup]="searchAdvertForm" (ngSubmit)="onFormSubmit()">
+
+    <ion-item>
+      <ion-label position="stacked">Ubicación</ion-label>
+      <ion-input formControlName="address"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Llegada</ion-label>
+      <ion-datetime min={{today}} max="2021-12-31" formControlName="startDate" placeholder="Select Date"
+        (ionChange)="getStartDate()"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Salida</ion-label>
+      <ion-datetime min={{minDate}} max="2021-12-31" formControlName="endDate" placeholder="Select Date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Nº de huéspedes</ion-label>
+      <ion-input formControlName="guests" type="number"></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" color="success" expand="block">Buscar</ion-button>
+  </form>
 </ion-content>

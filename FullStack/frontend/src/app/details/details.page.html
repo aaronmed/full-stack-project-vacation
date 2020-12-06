@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+    <ion-buttons id="return" (click)="returnAdverts()" slot="start">
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
     <ion-item slot="end" href="/log-in">
       Iniciar sesión
@@ -11,5 +11,33 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngIf="adverts">
+    <ion-card-header>
+      <img src="assets/sevilla.jpg" />
+      <ion-card-title>{{adverts.description}}</ion-card-title>
+      <ion-card-subtitle>{{adverts.address}}</ion-card-subtitle>
+      <ion-card-subtitle>{{adverts.user.name}}</ion-card-subtitle>
+      <ion-card-subtitle>{{adverts.price}}€ | {{adverts.published}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{adverts.guests}} huéspedes - {{adverts.bathrooms}} baños - {{adverts.beds}} camas - {{adverts.bedrooms}}
+      habitaciones
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content *ngFor="let review of reviews">
+      <ion-card-title>{{review.stars}}/5<ion-icon name="star"></ion-icon>
+      </ion-card-title>
+      <ion-card-subtitle>{{review.description}}</ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+
 
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button id="book">Reservar</ion-button>
+  </ion-toolbar>
+</ion-footer>
