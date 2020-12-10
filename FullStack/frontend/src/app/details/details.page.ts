@@ -5,12 +5,12 @@ import gql from 'graphql-tag';
 import { AdvertsService } from '../services/adverts.service';
 
 const BOOK_ADVERT = gql`
-mutation ($user: ID , $advert: ID, $start: Date , $end: Date ) {
+mutation ($idAdvert: Int, $startDate: String, $endDate: String){
   createBook(
      user: 1,
-     advert: 1,
-     start: "2020-02-10",
-     end: "2020-03-14",
+     advert: $idAdvert,
+     start: $startDate,
+     end: $endDate,
    ){
      user {id} advert {id} start end
    }
@@ -33,6 +33,8 @@ export class DetailsPage implements OnInit {
     this.getAdverts();
     this.getReviews();
     this.getAverageReview();
+    console.log(this.advertService.getStartDate());
+    console.log(this.advertService.getEndDate());
   }
 
   returnAdverts() {
@@ -96,10 +98,17 @@ export class DetailsPage implements OnInit {
   }
 
   book() {
+    let id = this.advertService.getCurrentAdvertId();
+    let startDate = this.advertService.getStartDate();
+    let endDate = this.advertService.getEndDate();
     this.apollo.mutate({
-      mutation: BOOK_ADVERT
-    });
-    console.log("Agua");
+      mutation: BOOK_ADVERT,
+      variables: {
+        idAdvert: id,
+        startDate: startDate,
+        endDate: endDate
+      }
+    }).subscribe();
   }
 
   getAverageReview() {

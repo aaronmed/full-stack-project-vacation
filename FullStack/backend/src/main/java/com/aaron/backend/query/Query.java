@@ -105,4 +105,15 @@ public class Query implements GraphQLQueryResolver {
 		}
 		return advertsWithFilters;
 	}
+	
+	public List<Book> getBooksByUser(int idUser){
+		List<Book> allBooks = bookService.getAll();
+		List<Book> booksByUser = new ArrayList<Book>();
+		for (Book b: allBooks) {
+			if (b.getUser().getId() == idUser) {
+				booksByUser.add(b);
+			}
+		}
+		return booksByUser;
+	}
 }

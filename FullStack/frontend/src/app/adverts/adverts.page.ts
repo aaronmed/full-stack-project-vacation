@@ -16,8 +16,11 @@ export class AdvertsPage implements OnInit {
   constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService) { }
 
   ngOnInit() {
-    //this.getAdverts();
-    this.getAdvertsWithFilters();
+    if (this.advertService.getAddress() == ""){
+      this.getAdverts();
+    } else {
+      this.getAdvertsWithFilters();
+    }
   }
 
   showDetails(id: number) {

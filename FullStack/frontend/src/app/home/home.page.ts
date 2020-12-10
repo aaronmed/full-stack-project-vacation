@@ -28,7 +28,6 @@ export class HomePage {
 
   ngOnInit() {
     this.today = new Date().toISOString();
-    console.log(this.today);
   }
 
   onFormSubmit() {
