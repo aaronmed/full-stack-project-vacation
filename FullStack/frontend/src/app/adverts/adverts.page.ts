@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { Advert } from '../models/advert';
 import { AdvertsService } from '../services/adverts.service';
 
 @Component({
@@ -26,7 +25,6 @@ export class AdvertsPage implements OnInit {
   showDetails(id: number) {
     this.router.navigateByUrl("/details");
     this.advertService.setCurrentAdvertId(id);
-    console.log(id);
   }
 
   getAdverts() {

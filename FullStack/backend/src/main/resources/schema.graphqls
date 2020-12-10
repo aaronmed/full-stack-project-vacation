@@ -53,6 +53,7 @@ type Query {
 	advertFilters(address: String, guests: Int): [Advert]
 	advertAverageReviews(id: ID): String
 	booksByUser(id: ID): [Book]
+	advertsByUser(id: ID): [Advert]
 }
 
 type Mutation {

@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-item slot="end" href="/log-in">
+      Iniciar sesión
+    </ion-item>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="createAdvertForm" (ngSubmit)="onFormSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-input formControlName="description" type="text" placeholder="Limpio y luminoso" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Dirección</ion-label>
+      <ion-input formControlName="address" type="text" placeholder="Alfambra" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Precio de la noche</ion-label>
+      <ion-input formControlName="price" type="number" placeholder="30" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Huéspedes máx.</ion-label>
+      <ion-input formControlName="guests" type="number" placeholder="2" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Baños</ion-label>
+      <ion-input formControlName="bathrooms" type="number" placeholder="1" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Habitaciones</ion-label>
+      <ion-input formControlName="bedrooms" type="number" placeholder="2" ngModel required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Camas</ion-label>
+      <ion-input formControlName="beds" type="number" placeholder="2" ngModel required></ion-input>
+    </ion-item>
+    <div padding>
+      <ion-button type="submit" color="success" expand="block">Crear</ion-button>
+      <ion-button color="success" expand="block" (click)="cancelAdvert()">Cancelar</ion-button>
+    </div>
+  </form>
+</ion-content>

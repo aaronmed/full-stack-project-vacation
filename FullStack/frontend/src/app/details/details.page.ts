@@ -16,6 +16,24 @@ mutation ($idAdvert: Int, $startDate: String, $endDate: String){
    }
  }
   `;
+const ADVERT = gql`
+query advert($idAdvert: ID){
+  advert(id: $idAdvert) {
+    id,
+    description,
+    address,
+    published,  
+    price,
+    guests,
+    bedrooms,
+    bathrooms,
+    beds,
+    user {
+      name
+    }
+  }
+}
+`;
 
 @Component({
   selector: 'app-details',
@@ -33,8 +51,6 @@ export class DetailsPage implements OnInit {
     this.getAdverts();
     this.getReviews();
     this.getAverageReview();
-    console.log(this.advertService.getStartDate());
-    console.log(this.advertService.getEndDate());
   }
 
   returnAdverts() {
@@ -43,27 +59,9 @@ export class DetailsPage implements OnInit {
 
   getAdverts() {
     let id = this.advertService.getCurrentAdvertId();
-    //console.log(id);
     this.apollo
       .watchQuery({
-        query: gql`
-      query advert($idAdvert: ID){
-        advert(id: $idAdvert) {
-          id,
-          description,
-          address,
-          published,  
-          price,
-          guests,
-          bedrooms,
-          bathrooms,
-          beds,
-          user {
-            name
-          }
-        }
-      }
-      `,
+        query: ADVERT,
         variables: {
           idAdvert: id,
         },

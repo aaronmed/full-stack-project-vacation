@@ -34,6 +34,18 @@ const routes: Routes = [
     path: 'my-books',
     loadChildren: () => import('./my-books/my-books.module').then( m => m.MyBooksPageModule)
   },
+  {
+    path: 'my-adverts',
+    loadChildren: () => import('./my-adverts/my-adverts.module').then( m => m.MyAdvertsPageModule)
+  },
+  {
+    path: 'create-advert',
+    loadChildren: () => import('./create-advert/create-advert.module').then( m => m.CreateAdvertPageModule)
+  },
+  {
+    path: 'update-advert',
+    loadChildren: () => import('./update-advert/update-advert.module').then( m => m.UpdateAdvertPageModule)
+  },
 
 ];
 
