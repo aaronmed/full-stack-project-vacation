@@ -58,8 +58,8 @@ export class AdvertsPage implements OnInit {
     this.apollo
     .watchQuery({
       query: gql`
-    query advert($address: String){
-      advertFilters(address: $address) {
+    query advert($address: String, $guests: Int){
+      advertFilters(address: $address, guests: $guests) {
         id,
         description,
         address,
@@ -77,6 +77,7 @@ export class AdvertsPage implements OnInit {
     `,
       variables: {
         address: this.advertService.getAddress(),
+        guests: this.advertService.getGuests()
       },
     })
     .valueChanges.subscribe((result: any) => {

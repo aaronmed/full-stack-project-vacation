@@ -27,6 +27,11 @@
   </ion-card>
 
   <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        Media de críticas: {{average}}<ion-icon name="star"></ion-icon>
+      </ion-card-title>
+    </ion-card-content>
     <ion-card-content *ngFor="let review of reviews">
       <ion-card-title>{{review.stars}}/5<ion-icon name="star"></ion-icon>
       </ion-card-title>
@@ -36,8 +41,8 @@
 
 
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="adverts">
   <ion-toolbar>
-    <ion-button id="book">Reservar</ion-button>
+    {{adverts.price}}€ por noche <ion-button id="book"  (click)="book()">Reservar</ion-button>
   </ion-toolbar>
 </ion-footer>

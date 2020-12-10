@@ -50,7 +50,8 @@ type Query {
 	reviews: [Review],
 	review(id: ID): Review,
 	advertReviews(advert: ID): [Review],
-	advertFilters(address: String): [Advert]
+	advertFilters(address: String, guests: Int): [Advert]
+	advertAverageReviews(id: ID): String
 }
 
 type Mutation {

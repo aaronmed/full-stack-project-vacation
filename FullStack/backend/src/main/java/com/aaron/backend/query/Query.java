@@ -77,11 +77,29 @@ public class Query implements GraphQLQueryResolver {
 		return advertReviews;
 	}
 	
-	public List<Advert> getAdvertFilters(String address){
+	public String getAdvertAverageReviews(int id){
+		List<Review> allReviews = reviewService.getAll();
+		List<Review> advertReviews = new ArrayList<Review>();
+		for (Review r: allReviews) {
+			if(r.getAdvert().getId() == id) {
+				advertReviews.add(r);
+			}
+		}
+		int total = 0;
+		
+		for (Review r: advertReviews) {
+			total += r.getStars();
+		}
+		float average = (float) total/advertReviews.size();
+		
+		return String.valueOf(average).substring(0,4);
+	}
+	
+	public List<Advert> getAdvertFilters(String address, int guests){
 		List<Advert> allAdverts = advertService.getAll();
 		List<Advert> advertsWithFilters = new ArrayList<Advert>();
 		for (Advert a: allAdverts) {
-			if(a.getAddress().equals(address)) {
+			if(a.getAddress().equals(address) && a.getGuests() == guests) {
 				advertsWithFilters.add(a);
 			}
 		}
