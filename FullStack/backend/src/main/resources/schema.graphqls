@@ -2,7 +2,7 @@ scalar Date
 
 type User {
 	id: ID!,
-	username: String,
+	email: String,
 	password: String,
 	name: String,
 	surname: String,
@@ -57,9 +57,9 @@ type Query {
 }
 
 type Mutation {
-	createUser(username: String, password: String, name: String, surname: String, dni: String, telephone: String): User
+	createUser(email: String, password: String, name: String, surname: String, dni: String, telephone: String): User
 	deleteUser(id: ID): Boolean
-	updateUser(id: ID, username: String, password: String, name: String, surname: String, dni: String, telephone: String): User
+	updateUser(id: ID, email: String, password: String, name: String, surname: String, dni: String, telephone: String): User
 	createAdvert(description: String, address: String, published: String, price: Float, guests: Int, bathrooms: Int, bedrooms: Int, beds: Int, user: Int): Advert
 	updateAdvert(id: ID, description: String, address: String, published: String, price: Float, guests: Int, bathrooms: Int, bedrooms: Int, beds: Int, user: Int): Advert
 	deleteAdvert(id: ID): Boolean

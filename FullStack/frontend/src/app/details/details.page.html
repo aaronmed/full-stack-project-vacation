@@ -15,14 +15,21 @@
     <ion-card-header>
       <img src="assets/sevilla.jpg" />
       <ion-card-title>{{adverts.description}}</ion-card-title>
-      <ion-card-subtitle>{{adverts.address}}</ion-card-subtitle>
-      <ion-card-subtitle>{{adverts.user.name}}</ion-card-subtitle>
-      <ion-card-subtitle>{{adverts.price}}€ | {{adverts.published}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Dirección:</strong> {{adverts.address}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Precio:</strong> {{adverts.price}}€ por noche</ion-card-subtitle>
+      <ion-card-subtitle><strong>Publicado:</strong>  {{adverts.published}}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      {{adverts.guests}} huéspedes - {{adverts.bathrooms}} baños - {{adverts.beds}} camas - {{adverts.bedrooms}}
-      habitaciones
+      <ion-card-subtitle><strong>Huesped/es:</strong> {{adverts.guests}} </ion-card-subtitle>
+      <ion-card-subtitle><strong>Baño/s:</strong> {{adverts.bathrooms}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Cama/s:</strong> {{adverts.beds}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Habitaciones:</strong> {{adverts.bedrooms}}</ion-card-subtitle>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle><strong>Contacto:</strong> {{adverts.user.name}} {{adverts.user.surname}} </ion-card-subtitle>
+      <ion-card-subtitle><strong>Teléfono:</strong> {{adverts.user.telephone}}</ion-card-subtitle>
     </ion-card-content>
   </ion-card>
 
@@ -35,8 +42,8 @@
     <ion-card-content *ngFor="let review of reviews">
       <ion-card-title>{{review.stars}}/5<ion-icon name="star"></ion-icon>
       </ion-card-title>
-      <ion-card-subtitle>{{review.published}}</ion-card-subtitle>
-      <ion-card-subtitle>{{review.description}}</ion-card-subtitle>
+      <ion-card-subtitle> {{review.published}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Descripción:</strong> {{review.description}}</ion-card-subtitle>
     </ion-card-content>
   </ion-card>
 
@@ -44,6 +51,6 @@
 </ion-content>
 <ion-footer *ngIf="adverts">
   <ion-toolbar>
-    {{adverts.price}}€ por noche <ion-button id="book"  (click)="book()">Reservar</ion-button>
+    {{adverts.price}}€ por noche <ion-button color="success" id="book" (click)="book()">Reservar</ion-button>
   </ion-toolbar>
 </ion-footer>

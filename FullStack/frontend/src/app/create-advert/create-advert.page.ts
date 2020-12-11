@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
+import { AlertController } from '@ionic/angular';
 
 const CREATE_ADVERT = gql`
 mutation ($description: String, $address: String, $published: String, $price: Float, $guests: Int, $bathrooms: Int, $bedrooms: Int, $beds: Int){
@@ -30,7 +31,7 @@ mutation ($description: String, $address: String, $published: String, $price: Fl
 export class CreateAdvertPage implements OnInit {
   createAdvertForm: FormGroup;
 
-  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router) {
+  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, public alertController: AlertController) {
     this.createAdvertForm = this.fb.group({
       description: [''],
       address: [''],
@@ -62,11 +63,27 @@ export class CreateAdvertPage implements OnInit {
         user: 1
       }
     }).subscribe((res) => {
+      this.presentAlert();
       this.router.navigateByUrl("/my-adverts");
     });
   }
 
   cancelAdvert() {
     this.router.navigateByUrl("/my-adverts");
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Anuncio creado.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  login(){
+    this.router.navigateByUrl("/log-in");
   }
 }

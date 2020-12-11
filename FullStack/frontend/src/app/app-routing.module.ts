@@ -24,13 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./adverts/adverts.module').then( m => m.AdvertsPageModule)
   },
   {
-    path: 'filters',
-    loadChildren: () => import('./filters/filters.module').then( m => m.FiltersPageModule)
-  },
-  {
     path: 'details',
     loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
-  },  {
+  },
+  {
     path: 'my-books',
     loadChildren: () => import('./my-books/my-books.module').then( m => m.MyBooksPageModule)
   },

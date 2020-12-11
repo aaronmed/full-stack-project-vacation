@@ -4,6 +4,23 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AdvertsService } from '../services/adverts.service';
 
+const GET_ADVERTS = gql`
+query advert($address: String, $guests: Int){
+  advertFilters(address: $address, guests: $guests) {
+    id,
+    description,
+    address,
+    published,  
+    price,
+    guests,
+    user {
+      name,
+      surname
+    }
+  }
+}
+`;
+
 @Component({
   selector: 'app-adverts',
   templateUrl: './adverts.page.html',
@@ -15,11 +32,7 @@ export class AdvertsPage implements OnInit {
   constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService) { }
 
   ngOnInit() {
-    if (this.advertService.getAddress() == ""){
       this.getAdverts();
-    } else {
-      this.getAdvertsWithFilters();
-    }
   }
 
   showDetails(id: number) {
@@ -27,55 +40,11 @@ export class AdvertsPage implements OnInit {
     this.advertService.setCurrentAdvertId(id);
   }
 
+
   getAdverts() {
     this.apollo
-      .watchQuery({
-        query: gql`
-      {
-      adverts {
-        id,
-        description,
-        address,
-        published,  
-        price,
-        guests,
-        bedrooms,
-        bathrooms,
-        beds,
-        user {
-          name
-        }
-      }
-    }
-      `,
-      })
-      .valueChanges.subscribe((result: any) => {
-        this.adverts = result.data.adverts;
-        //console.log(result.data.adverts);
-      });
-  }
-
-  getAdvertsWithFilters() {
-    this.apollo
     .watchQuery({
-      query: gql`
-    query advert($address: String, $guests: Int){
-      advertFilters(address: $address, guests: $guests) {
-        id,
-        description,
-        address,
-        published,  
-        price,
-        guests,
-        bedrooms,
-        bathrooms,
-        beds,
-        user {
-          name
-        }
-      }
-    }
-    `,
+      query: GET_ADVERTS,
       variables: {
         address: this.advertService.getAddress(),
         guests: this.advertService.getGuests()
@@ -86,5 +55,9 @@ export class AdvertsPage implements OnInit {
       console.log(this.adverts);
       console.log(this.advertService.getAddress());
     });
+  }
+
+  login(){
+    this.router.navigateByUrl("/log-in");
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AdvertsService } from '../services/adverts.service';
@@ -29,9 +30,28 @@ query advert($idAdvert: ID){
     bathrooms,
     beds,
     user {
-      name
+      name,
+      surname,
+      telephone
     }
   }
+}
+`;
+
+const REVIEWS =  gql`
+query advert($idAdvert: ID){
+  advertReviews(advert: $idAdvert) {
+    id,
+    description,
+    stars,
+    published
+  }
+}
+`;
+
+const AVERAGE_REVIEWS = gql`
+query advert($idAdvert: ID){
+  advertAverageReviews(id: $idAdvert)
 }
 `;
 
@@ -45,7 +65,7 @@ export class DetailsPage implements OnInit {
   reviews: any[];
   average: any;
 
-  constructor(private apollo: Apollo, private advertService: AdvertsService, private router: Router,) { }
+  constructor(private apollo: Apollo, private advertService: AdvertsService, private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
     this.getAdverts();
@@ -75,16 +95,7 @@ export class DetailsPage implements OnInit {
     let id = this.advertService.getCurrentAdvertId();
     this.apollo
       .watchQuery({
-        query: gql`
-      query advert($idAdvert: ID){
-        advertReviews(advert: $idAdvert) {
-          id,
-          description,
-          stars,
-          published
-        }
-      }
-      `,
+        query: REVIEWS,
         variables: {
           idAdvert: id,
         },
@@ -106,18 +117,17 @@ export class DetailsPage implements OnInit {
         startDate: startDate,
         endDate: endDate
       }
-    }).subscribe();
+    }).subscribe((res) => {
+      this.presentAlert();
+      this.router.navigateByUrl("/my-books");
+    });
   }
 
   getAverageReview() {
     let id = this.advertService.getCurrentAdvertId();
     this.apollo
       .watchQuery({
-        query: gql`
-    query advert($idAdvert: ID){
-      advertAverageReviews(id: $idAdvert)
-    }
-    `,
+        query: AVERAGE_REVIEWS,
         variables: {
           idAdvert: id
         },
@@ -126,5 +136,20 @@ export class DetailsPage implements OnInit {
         this.average = result.data.advertAverageReviews;
         console.log(result.data.advertAverageReviews);
       });
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Reserva realizada.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  login(){
+    this.router.navigateByUrl("/log-in");
   }
 }

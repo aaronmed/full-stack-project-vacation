@@ -6,7 +6,7 @@ USE db_vacations;
 
 CREATE TABLE user (
 id bigint AUTO_INCREMENT,
-username varchar(45),
+email varchar(45),
 password varchar(45),
 name varchar(45),
 surname varchar(45),

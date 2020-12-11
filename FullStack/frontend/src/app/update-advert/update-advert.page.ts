@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 import { AdvertsService } from '../services/adverts.service';
+import { AlertController } from '@ionic/angular';
 
 const ADVERT = gql`
 query advert($idAdvert: ID){
@@ -54,7 +55,7 @@ export class UpdateAdvertPage implements OnInit {
   published: any;
   id: any;
 
-  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, private advertService: AdvertsService) {
+  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, private advertService: AdvertsService, public alertController: AlertController) {
     this.updateAdvertForm = this.fb.group({
       description: [''],
       address: [''],
@@ -113,6 +114,18 @@ export class UpdateAdvertPage implements OnInit {
       }
     }).subscribe((res) => {
       this.router.navigateByUrl("/my-adverts");
+      this.presentAlert();
     });
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Anuncio editado.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AdvertsService } from '../services/adverts.service';
+import { AlertController } from '@ionic/angular';
 
 const DELETE_ADVERT = gql`
 mutation ($idAdvert: ID){
@@ -39,14 +40,16 @@ const ADVERT_BY_USER = gql`
 export class MyAdvertsPage implements OnInit {
   adverts: any[];
 
-  constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService) { }
+  constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService, public alertController: AlertController) { }
 
   ngOnInit() {
-    this.getAdverts();
+    //console.log(GraphQLError);
+    this.getAdverts();   
   }
 
+
   ionViewWillEnter() {
-    this.getAdverts();
+    //this.getAdverts();
   }
 
   getAdverts() {
@@ -80,8 +83,31 @@ export class MyAdvertsPage implements OnInit {
         idAdvert: id
       }
     }).subscribe(() => {
+      this.presentAlert();
       this.getAdverts();
+      
     });
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Anuncio borrado.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: '¡ERROR CONEXIÓN BASE DE DATOS!',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }

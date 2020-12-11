@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.aaron.backend.entity.models.Advert;
@@ -16,9 +15,6 @@ import com.aaron.backend.services.IBookService;
 import com.aaron.backend.services.IReviewService;
 import com.aaron.backend.services.IUserService;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-
-import graphql.scalars.ExtendedScalars;
-import graphql.schema.GraphQLScalarType;
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
@@ -131,10 +127,5 @@ public class Mutation implements GraphQLMutationResolver {
 	public boolean deleteReview(long id) {
 		reviewService.deleteReview(id);
 		return true;
-	}
-
-	@Bean
-	public GraphQLScalarType date() {
-		return ExtendedScalars.Date;
 	}
 }

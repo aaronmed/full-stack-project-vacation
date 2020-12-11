@@ -3,12 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-item slot="end" href="/log-in">
+    <ion-item slot="end" (click)="login()">
       Iniciar sesión
     </ion-item>
-    <!-- <ion-title>
-      
-    </ion-title> -->
+    <ion-title>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,30 +17,40 @@
       <ion-title size="large">Blank</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <form [formGroup]="searchAdvertForm" (ngSubmit)="onFormSubmit()">
 
     <ion-item>
-      <ion-label position="stacked">Ubicación</ion-label>
-      <ion-input formControlName="address"></ion-input>
+      <ion-label position="stacked">Dirección</ion-label>
+      <ion-input formControlName="address" type="text" required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Dirección es requerido.
+      </span>
     </ion-item>
 
     <ion-item>
       <ion-label>Llegada</ion-label>
       <ion-datetime min={{today}} max="2021-12-31" formControlName="startDate" placeholder="Select Date"
-        (ionChange)="getStartDate()"></ion-datetime>
+        (ionChange)="getStartDate()" required></ion-datetime>
+        <span class="error ion-padding" *ngIf="isSubmitted">
+         Fecha de llegada es requerida.
+        </span>
     </ion-item>
 
     <ion-item>
       <ion-label>Salida</ion-label>
-      <ion-datetime min={{minDate}} max="2021-12-31" formControlName="endDate" placeholder="Select Date"></ion-datetime>
+      <ion-datetime (click)="checkStartDate()" min={{minDate}} max="2021-12-31" formControlName="endDate" placeholder="Select Date" required></ion-datetime>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Fecha de salida es requerida.
+       </span>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Nº de huéspedes</ion-label>
-      <ion-input formControlName="guests" type="number"></ion-input>
+      <ion-input formControlName="guests" type="number" required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Nº de huéspedes es requerido.
+       </span>
     </ion-item>
-
     <ion-button type="submit" color="success" expand="block">Buscar</ion-button>
   </form>
 </ion-content>

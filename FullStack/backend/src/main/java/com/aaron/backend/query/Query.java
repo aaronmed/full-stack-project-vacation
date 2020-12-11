@@ -92,7 +92,12 @@ public class Query implements GraphQLQueryResolver {
 		}
 		float average = (float) total/advertReviews.size();
 		
-		return String.valueOf(average).substring(0,4);
+		String result = String.format("%.2f", average);
+		if(result.equals("NaN")) {
+			return "";
+		} else {
+			return result;
+		}
 	}
 	
 	public List<Advert> getAdvertFilters(String address, int guests){
