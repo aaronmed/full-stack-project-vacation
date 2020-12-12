@@ -43,10 +43,13 @@
       <ion-card-subtitle><strong>Descripción:</strong> {{review.description}}</ion-card-subtitle>
     </ion-card-content>
   </ion-card>
-
-
+  <ion-card *ngIf="islogin && !propietary">
+    <ion-input placeholder="Nueva crítica"></ion-input>
+    <ion-button color="success" expand="block">Enviar crítica</ion-button>
+  </ion-card>
 </ion-content>
-<ion-footer *ngIf="adverts && islogin">
+
+<ion-footer *ngIf="adverts && islogin && !propietary">
   <ion-toolbar>
     {{adverts.price}}€ por noche <ion-button color="success" id="book" (click)="book()">Reservar</ion-button>
   </ion-toolbar>

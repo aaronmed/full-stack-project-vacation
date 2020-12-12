@@ -31,6 +31,7 @@ query advert($idAdvert: ID){
     bathrooms,
     beds,
     user {
+      id,
       name,
       surname,
       telephone
@@ -39,7 +40,7 @@ query advert($idAdvert: ID){
 }
 `;
 
-const REVIEWS =  gql`
+const REVIEWS = gql`
 query advert($idAdvert: ID){
   advertReviews(advert: $idAdvert) {
     id,
@@ -66,24 +67,27 @@ export class DetailsPage implements OnInit {
   reviews: any[];
   average: any;
   iduser: number;
+  iduseradvert: number;
   islogin = false;
+  propietary = false;
 
-  constructor(private apollo: Apollo, 
-    private advertService: AdvertsService, 
-    private router: Router, 
+  constructor(private apollo: Apollo,
+    private advertService: AdvertsService,
+    private router: Router,
     private alertController: AlertController,
     public storage: Storage) { }
 
   ngOnInit() {
-    this.getAdverts();
-    this.getReviews();
-    this.getAverageReview();
     this.storage.get('iduser').then((val) => {
       this.iduser = val;
-      if(val != null){
+      if (val != null) {
         this.islogin = true;
       }
     });
+    this.getAdverts();
+    this.getReviews();
+    this.getAverageReview();
+
   }
 
   returnAdverts() {
@@ -101,6 +105,7 @@ export class DetailsPage implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.adverts = result.data.advert;
+        this.iduseradvert = result.data.advert.user.id;
       });
   }
 
@@ -123,18 +128,22 @@ export class DetailsPage implements OnInit {
     let id = this.advertService.getCurrentAdvertId();
     let startDate = this.advertService.getStartDate();
     let endDate = this.advertService.getEndDate();
-    this.apollo.mutate({
-      mutation: BOOK_ADVERT,
-      variables: {
-        idUser: this.iduser,
-        idAdvert: id,
-        startDate: startDate,
-        endDate: endDate
-      }
-    }).subscribe((res) => {
-      this.presentAlert();
-      this.router.navigateByUrl("/my-books");
-    });
+    if (this.iduser == this.iduseradvert) {
+      this.presentCantBook();
+    } else {
+      this.apollo.mutate({
+        mutation: BOOK_ADVERT,
+        variables: {
+          idUser: this.iduser,
+          idAdvert: id,
+          startDate: startDate,
+          endDate: endDate
+        }
+      }).subscribe((res) => {
+        this.presentAlert();
+        this.router.navigateByUrl("/my-books");
+      });
+    }
   }
 
   getAverageReview() {
@@ -157,6 +166,17 @@ export class DetailsPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Aviso',
       message: 'Reserva realizada.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentCantBook() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'No puede hacer la reserva de su propio anuncio.',
       buttons: ['OK']
     });
 

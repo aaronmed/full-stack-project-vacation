@@ -11,10 +11,10 @@
   <ion-card *ngFor="let book of books">
     <ion-card-header>
       <ion-card-title>{{book.advert.description}}</ion-card-title>
-      <ion-card-subtitle>Dirección: {{book.advert.address}}</ion-card-subtitle>
-      <ion-card-subtitle>Fecha de llegada: {{book.start}}</ion-card-subtitle>
-      <ion-card-subtitle>Fecha de salida: {{book.end}}</ion-card-subtitle>
-      <ion-card-subtitle>{{book.advert.price}}€ por noche</ion-card-subtitle>
+      <ion-card-subtitle><strong>Dirección:</strong> {{book.advert.address}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Fecha de llegada:</strong> {{book.start}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Fecha de salida:</strong> {{book.end}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Precio:</strong> {{book.advert.price}}€ por noche</ion-card-subtitle>
       <ion-button color="success" (click)="cancelBook(book.id)">Cancelar reserva</ion-button>
     </ion-card-header>
   </ion-card>

@@ -100,8 +100,4 @@ export class CreateAdvertPage implements OnInit {
 
     await alert.present();
   }
-
-  login() {
-    this.router.navigateByUrl("/log-in");
-  }
 }

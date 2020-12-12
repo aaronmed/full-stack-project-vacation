@@ -29,10 +29,17 @@ query advert($address: String, $guests: Int){
 export class AdvertsPage implements OnInit {
   adverts: any[];
 
-  constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService) { }
+  constructor(private apollo: Apollo,
+    private router: Router,
+    private advertService: AdvertsService
+    ) { }
 
   ngOnInit() {
-      this.getAdverts();
+    this.getAdverts();
+  }
+
+  ionViewWillEnter() {
+    this.getAdverts();
   }
 
   showDetails(id: number) {
@@ -43,21 +50,15 @@ export class AdvertsPage implements OnInit {
 
   getAdverts() {
     this.apollo
-    .watchQuery({
-      query: GET_ADVERTS,
-      variables: {
-        address: this.advertService.getAddress(),
-        guests: this.advertService.getGuests()
-      },
-    })
-    .valueChanges.subscribe((result: any) => {
-      this.adverts = result.data.advertFilters; 
-      console.log(this.adverts);
-      console.log(this.advertService.getAddress());
-    });
-  }
-
-  login(){
-    this.router.navigateByUrl("/log-in");
+      .watchQuery({
+        query: GET_ADVERTS,
+        variables: {
+          address: this.advertService.getAddress(),
+          guests: this.advertService.getGuests()
+        },
+      })
+      .valueChanges.subscribe((result: any) => {
+        this.adverts = result.data.advertFilters;
+      });
   }
 }

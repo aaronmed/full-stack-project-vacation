@@ -25,7 +25,10 @@ export class LogInPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
 
-  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, private storage: Storage) {
+  constructor(private apollo: Apollo, 
+    public fb: FormBuilder, 
+    private router: Router, 
+    private storage: Storage) {
     this.loginForm = this.fb.group({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -57,5 +60,9 @@ export class LogInPage implements OnInit {
         }
       });
     }
+  }
+
+  register(){
+    this.router.navigateByUrl("/register");
   }
 }
