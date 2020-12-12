@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 const CREATE_ADVERT = gql`
-mutation ($description: String, $address: String, $published: String, $price: Float, $guests: Int, $bathrooms: Int, $bedrooms: Int, $beds: Int){
+mutation ($description: String, $address: String, $published: String, $price: Float, $guests: Int, $bathrooms: Int, $bedrooms: Int, $beds: Int, $user: Int){
   createAdvert(
     description: $description,
     address: $address,
@@ -16,7 +17,7 @@ mutation ($description: String, $address: String, $published: String, $price: Fl
     bathrooms: $bathrooms,
     bedrooms: $bedrooms,
     beds: $beds,
-    user: 1
+    user: $user
    ){
     description address published price guests bathrooms bedrooms beds user {id}
    }
@@ -31,8 +32,13 @@ mutation ($description: String, $address: String, $published: String, $price: Fl
 export class CreateAdvertPage implements OnInit {
   createAdvertForm: FormGroup;
   isSubmitted = false;
+  iduser: number;
 
-  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, public alertController: AlertController) {
+  constructor(private apollo: Apollo, 
+    public fb: FormBuilder, 
+    private router: Router, 
+    public alertController: AlertController,
+    public storage: Storage) {
     this.createAdvertForm = this.fb.group({
       description: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
@@ -45,6 +51,9 @@ export class CreateAdvertPage implements OnInit {
   }
 
   ngOnInit() {
+    this.storage.get('iduser').then((val) => {
+      this.iduser = val;
+    });
   }
 
 
@@ -54,6 +63,7 @@ export class CreateAdvertPage implements OnInit {
       this.isSubmitted = true;
       return false;
     } else {
+      console.log(this.iduser);
       this.apollo.mutate({
         mutation: CREATE_ADVERT,
         variables: {
@@ -65,7 +75,7 @@ export class CreateAdvertPage implements OnInit {
           bathrooms: this.createAdvertForm.value.bathrooms,
           bedrooms: this.createAdvertForm.value.bedrooms,
           beds: this.createAdvertForm.value.beds,
-          user: 1
+          user: this.iduser
         }
       }).subscribe((res) => {
         this.presentAlert();

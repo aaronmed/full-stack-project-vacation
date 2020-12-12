@@ -3,9 +3,6 @@
     <ion-buttons id="return" (click)="returnAdverts()" slot="start">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-item slot="end" href="/log-in">
-      Iniciar sesión
-    </ion-item>
     <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
@@ -49,7 +46,7 @@
 
 
 </ion-content>
-<ion-footer *ngIf="adverts">
+<ion-footer *ngIf="adverts && islogin">
   <ion-toolbar>
     {{adverts.price}}€ por noche <ion-button color="success" id="book" (click)="book()">Reservar</ion-button>
   </ion-toolbar>

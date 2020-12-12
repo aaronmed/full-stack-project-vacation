@@ -7,14 +7,17 @@
             <ion-item detail="false" (click)="search()">
               <ion-label>Búsqueda</ion-label>
             </ion-item>
-            <ion-item detail="false" (click)="myAdverts()">
+            <ion-item detail="false" (click)="myAdverts()" *ngIf="!isLogin">
               <ion-label>Mis anuncios</ion-label>
             </ion-item>
-            <ion-item detail="false" (click)="myBooks()">
+            <ion-item detail="false" (click)="myBooks()" *ngIf="!isLogin">
               <ion-label>Mis reservas</ion-label>
             </ion-item>
-            <ion-item detail="false">
-              <ion-label>Cerrar sesión</ion-label>
+            <ion-item detail="false" (click)="login()" *ngIf="isLogin">
+              Iniciar sesión
+            </ion-item>
+            <ion-item detail="false" (click)="logout()" *ngIf="!isLogin">
+              Cerrar sesión
             </ion-item>
             <ion-item>
               <ion-toggle (ionChange)='toggleTheme($event)'></ion-toggle>

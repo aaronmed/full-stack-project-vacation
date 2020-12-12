@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 const CANCEL_BOOK = gql`
 mutation ($idBook: ID){
@@ -38,11 +39,18 @@ query ($idUser: ID) {
 })
 export class MyBooksPage implements OnInit {
   books: any[];
+  iduser: number;
 
-  constructor(private apollo: Apollo, private router: Router, public alertController: AlertController) { }
+  constructor(private apollo: Apollo, 
+    private router: Router,
+    public alertController: AlertController,
+    public storage: Storage) { }
 
   ngOnInit() {
-    this.getBooks();
+    this.storage.get('iduser').then((val) => {
+      this.iduser = val;
+      this.getBooks();
+    });
   }
 
   getBooks() {
@@ -50,7 +58,7 @@ export class MyBooksPage implements OnInit {
       .watchQuery({
         query: GET_BOOKS,
         variables: {
-          idUser: 1
+          idUser: this.iduser
         },
       })
       .valueChanges.subscribe((result: any) => {

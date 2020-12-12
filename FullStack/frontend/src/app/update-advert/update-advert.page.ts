@@ -102,27 +102,27 @@ export class UpdateAdvertPage implements OnInit {
       this.isSubmitted = true;
       return false;
     } else {
-    this.apollo.mutate({
-      mutation: UPDATE_ADVERT,
-      variables: {
-        id: this.id,
-        description: this.updateAdvertForm.value.description,
-        address: this.updateAdvertForm.value.address,
-        published: this.published,
-        price: this.updateAdvertForm.value.price,
-        guests: this.updateAdvertForm.value.guests,
-        bathrooms: this.updateAdvertForm.value.bathrooms,
-        bedrooms: this.updateAdvertForm.value.bedrooms,
-        beds: this.updateAdvertForm.value.beds,
-        user: 1
-      }
-    }).subscribe((res) => {
-      this.isSubmitted = false;
-      this.updateAdvertForm.reset();
-      this.presentAlert();
-      this.router.navigateByUrl("/my-adverts");
-    });
-  }
+      this.apollo.mutate({
+        mutation: UPDATE_ADVERT,
+        variables: {
+          id: this.id,
+          description: this.updateAdvertForm.value.description,
+          address: this.updateAdvertForm.value.address,
+          published: this.published,
+          price: this.updateAdvertForm.value.price,
+          guests: this.updateAdvertForm.value.guests,
+          bathrooms: this.updateAdvertForm.value.bathrooms,
+          bedrooms: this.updateAdvertForm.value.bedrooms,
+          beds: this.updateAdvertForm.value.beds,
+          user: 1
+        }
+      }).subscribe((res) => {
+        this.isSubmitted = false;
+        this.updateAdvertForm.reset();
+        this.presentAlert();
+        this.router.navigateByUrl("/my-adverts");
+      });
+    }
   }
 
   async presentAlert() {

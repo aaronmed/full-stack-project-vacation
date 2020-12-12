@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AdvertsService } from '../services/adverts.service';
 import { AlertController } from '@ionic/angular';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -17,6 +16,7 @@ export class HomePage {
   minDate: String;
   isSubmitted = false;
   isStartDate = false;
+  isLogin = true;
 
   constructor(public fb: FormBuilder,
     private router: Router,
@@ -32,6 +32,7 @@ export class HomePage {
 
   ngOnInit() {
     this.today = new Date().toISOString();
+
   }
 
   onFormSubmit() {
@@ -62,10 +63,10 @@ export class HomePage {
     return this.searchAdvertForm.controls;
   }
 
-  checkStartDate(){
-    if (!this.isStartDate){
+  checkStartDate() {
+    if (!this.isStartDate) {
       this.presentAlert();
-    } 
+    }
   }
 
   async presentAlert() {
@@ -77,9 +78,5 @@ export class HomePage {
     });
 
     await alert.present();
-  }
-
-  login(){
-    this.router.navigateByUrl("/log-in");
   }
 }

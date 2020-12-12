@@ -4,11 +4,12 @@ import { AlertController } from '@ionic/angular';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AdvertsService } from '../services/adverts.service';
+import { Storage } from '@ionic/storage';
 
 const BOOK_ADVERT = gql`
-mutation ($idAdvert: Int, $startDate: String, $endDate: String){
+mutation ($idUser: Int, $idAdvert: Int, $startDate: String, $endDate: String){
   createBook(
-     user: 1,
+     user: $idUser,
      advert: $idAdvert,
      start: $startDate,
      end: $endDate,
@@ -64,13 +65,25 @@ export class DetailsPage implements OnInit {
   adverts: any[];
   reviews: any[];
   average: any;
+  iduser: number;
+  islogin = false;
 
-  constructor(private apollo: Apollo, private advertService: AdvertsService, private router: Router, private alertController: AlertController) { }
+  constructor(private apollo: Apollo, 
+    private advertService: AdvertsService, 
+    private router: Router, 
+    private alertController: AlertController,
+    public storage: Storage) { }
 
   ngOnInit() {
     this.getAdverts();
     this.getReviews();
     this.getAverageReview();
+    this.storage.get('iduser').then((val) => {
+      this.iduser = val;
+      if(val != null){
+        this.islogin = true;
+      }
+    });
   }
 
   returnAdverts() {
@@ -113,6 +126,7 @@ export class DetailsPage implements OnInit {
     this.apollo.mutate({
       mutation: BOOK_ADVERT,
       variables: {
+        idUser: this.iduser,
         idAdvert: id,
         startDate: startDate,
         endDate: endDate
@@ -147,9 +161,5 @@ export class DetailsPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  login(){
-    this.router.navigateByUrl("/log-in");
   }
 }

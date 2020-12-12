@@ -11,46 +11,45 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column
-	private String email;
-	
+	private String username;
+
 	@Column
 	private String password;
-	
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String surname;
-	
+
 	@Column
 	private String dni;
-	
+
 	@Column
 	private String telephone;
-	
+
 	public User() {
-		
+
 	}
 
-	public User(String email, String password, String name, String surname, String dni, String telephone) {
+	public User(String username, String password, String name, String surname, String dni, String telephone) {
 		super();
-		this.email = email;
+		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.dni = dni;
 		this.telephone = telephone;
 	}
-
 
 	public long getId() {
 		return id;
@@ -60,12 +59,12 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
