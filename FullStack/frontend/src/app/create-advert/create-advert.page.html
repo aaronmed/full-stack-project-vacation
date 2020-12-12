@@ -15,30 +15,51 @@
     <ion-item>
       <ion-label position="stacked">Descripción</ion-label>
       <ion-input formControlName="description" type="text" placeholder="Limpio y luminoso" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Descripción es requerido.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Dirección</ion-label>
       <ion-input formControlName="address" type="text" placeholder="Alfambra" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Dirección es requerido.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Precio de la noche</ion-label>
       <ion-input formControlName="price" type="number" placeholder="30" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Precio de la noche es requerido.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Huéspedes máx.</ion-label>
       <ion-input formControlName="guests" type="number" placeholder="2" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+       Huéspedes max. es requerido.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Baños</ion-label>
       <ion-input formControlName="bathrooms" type="number" placeholder="1" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Baños es requerido.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Habitaciones</ion-label>
       <ion-input formControlName="bedrooms" type="number" placeholder="2" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Habitaciones es requerido.
+      </span>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Camas</ion-label>
       <ion-input formControlName="beds" type="number" placeholder="2" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Camas es requerido.
+      </span>
     </ion-item>
     <div padding>
       <ion-button type="submit" color="success" expand="block">Crear</ion-button>

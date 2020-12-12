@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
@@ -30,42 +30,50 @@ mutation ($description: String, $address: String, $published: String, $price: Fl
 })
 export class CreateAdvertPage implements OnInit {
   createAdvertForm: FormGroup;
+  isSubmitted = false;
 
   constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, public alertController: AlertController) {
     this.createAdvertForm = this.fb.group({
-      description: [''],
-      address: [''],
-      price: [''],
-      guests: [''],
-      bathrooms: [''],
-      bedrooms: [''],
-      beds: ['']
+      description: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      guests: new FormControl('', Validators.required),
+      bathrooms: new FormControl('', Validators.required),
+      bedrooms: new FormControl('', Validators.required),
+      beds: new FormControl('', Validators.required)
     });
   }
 
   ngOnInit() {
   }
 
-  
+
 
   onFormSubmit() {
-    this.apollo.mutate({
-      mutation: CREATE_ADVERT,
-      variables: {
-        description: this.createAdvertForm.value.description,
-        address: this.createAdvertForm.value.address,
-        published: new Date().toISOString().split('T')[0],
-        price: this.createAdvertForm.value.price,
-        guests: this.createAdvertForm.value.guests,
-        bathrooms: this.createAdvertForm.value.bathrooms,
-        bedrooms: this.createAdvertForm.value.bedrooms,
-        beds: this.createAdvertForm.value.beds,
-        user: 1
-      }
-    }).subscribe((res) => {
-      this.presentAlert();
-      this.router.navigateByUrl("/my-adverts");
-    });
+    if (!this.createAdvertForm.valid) {
+      this.isSubmitted = true;
+      return false;
+    } else {
+      this.apollo.mutate({
+        mutation: CREATE_ADVERT,
+        variables: {
+          description: this.createAdvertForm.value.description,
+          address: this.createAdvertForm.value.address,
+          published: new Date().toISOString().split('T')[0],
+          price: this.createAdvertForm.value.price,
+          guests: this.createAdvertForm.value.guests,
+          bathrooms: this.createAdvertForm.value.bathrooms,
+          bedrooms: this.createAdvertForm.value.bedrooms,
+          beds: this.createAdvertForm.value.beds,
+          user: 1
+        }
+      }).subscribe((res) => {
+        this.presentAlert();
+        this.isSubmitted = false;
+        this.createAdvertForm.reset();
+        this.router.navigateByUrl("/my-adverts");
+      });
+    }
   }
 
   cancelAdvert() {
@@ -83,7 +91,7 @@ export class CreateAdvertPage implements OnInit {
     await alert.present();
   }
 
-  login(){
+  login() {
     this.router.navigateByUrl("/log-in");
   }
 }

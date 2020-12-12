@@ -43,71 +43,70 @@ export class MyAdvertsPage implements OnInit {
   constructor(private apollo: Apollo, private router: Router, private advertService: AdvertsService, public alertController: AlertController) { }
 
   ngOnInit() {
-    //console.log(GraphQLError);
-    this.getAdverts();   
+    this.getAdverts();
   }
 
 
   ionViewWillEnter() {
-    //this.getAdverts();
-  }
+    this.getAdverts();
+}
 
-  getAdverts() {
-    this.apollo
-      .watchQuery({
-        query: ADVERT_BY_USER,
-        variables: {
-          idAdvert: 1,
-        },
-      })
-      .valueChanges.subscribe((result: any) => {
-        this.adverts = result.data.advertsByUser;
-      });
-  }
-
-
-
-  updateAdvert(id: number) {
-    this.router.navigateByUrl("/update-advert");
-    this.advertService.setCurrentAdvertId(id);
-  }
-
-  createAdvert() {
-    this.router.navigateByUrl("/create-advert");
-  }
-
-  deleteAdvert(id: number) {
-    this.apollo.mutate({
-      mutation: DELETE_ADVERT,
+getAdverts() {
+  this.apollo
+    .watchQuery({
+      query: ADVERT_BY_USER,
       variables: {
-        idAdvert: id
-      }
-    }).subscribe(() => {
-      this.presentAlert();
-      this.getAdverts();
-      
+        idAdvert: 1,
+      },
+    })
+    .valueChanges.subscribe((result: any) => {
+      this.adverts = result.data.advertsByUser;
     });
-  }
+}
 
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Aviso',
-      message: 'Anuncio borrado.',
-      buttons: ['OK']
-    });
 
-    await alert.present();
-  }
 
-  async presentAlertError() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Aviso',
-      message: '¡ERROR CONEXIÓN BASE DE DATOS!',
-      buttons: ['OK']
-    });
+updateAdvert(id: number) {
+  this.router.navigateByUrl("/update-advert");
+  this.advertService.setCurrentAdvertId(id);
+}
 
-    await alert.present();
-  }
+createAdvert() {
+  this.router.navigateByUrl("/create-advert");
+}
+
+deleteAdvert(id: number) {
+  this.apollo.mutate({
+    mutation: DELETE_ADVERT,
+    variables: {
+      idAdvert: id
+    }
+  }).subscribe(() => {
+    this.presentAlert();
+    this.getAdverts();
+
+  });
+}
+
+async presentAlert() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Aviso',
+    message: 'Anuncio borrado.',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
+
+async presentAlertError() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Aviso',
+    message: '¡ERROR CONEXIÓN BASE DE DATOS!',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
 }

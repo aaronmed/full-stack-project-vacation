@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
@@ -54,16 +54,17 @@ export class UpdateAdvertPage implements OnInit {
   adverts: any[];
   published: any;
   id: any;
+  isSubmitted = false;
 
   constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, private advertService: AdvertsService, public alertController: AlertController) {
     this.updateAdvertForm = this.fb.group({
-      description: [''],
-      address: [''],
-      price: [''],
-      guests: [''],
-      bathrooms: [''],
-      bedrooms: [''],
-      beds: ['']
+      description: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      guests: new FormControl('', Validators.required),
+      bathrooms: new FormControl('', Validators.required),
+      bedrooms: new FormControl('', Validators.required),
+      beds: new FormControl('', Validators.required)
     });
   }
 
@@ -97,7 +98,10 @@ export class UpdateAdvertPage implements OnInit {
   }
 
   onFormSubmit() {
-    console.log(this.published);
+    if (!this.updateAdvertForm.valid) {
+      this.isSubmitted = true;
+      return false;
+    } else {
     this.apollo.mutate({
       mutation: UPDATE_ADVERT,
       variables: {
@@ -113,9 +117,12 @@ export class UpdateAdvertPage implements OnInit {
         user: 1
       }
     }).subscribe((res) => {
-      this.router.navigateByUrl("/my-adverts");
+      this.isSubmitted = false;
+      this.updateAdvertForm.reset();
       this.presentAlert();
+      this.router.navigateByUrl("/my-adverts");
     });
+  }
   }
 
   async presentAlert() {

@@ -26,7 +26,7 @@ export class HomePage {
       address: new FormControl('', Validators.required),
       startDate: new FormControl('', Validators.required),
       endDate: new FormControl('', Validators.required),
-      guests: new FormControl('', Validators.required),
+      guests: new FormControl('', Validators.required)
     });
   }
 
@@ -35,11 +35,9 @@ export class HomePage {
   }
 
   onFormSubmit() {
-    this.isSubmitted = true;
     if (!this.searchAdvertForm.valid) {
-      console.log("Fill all fields");
+      this.isSubmitted = true;
       return false;
-      
     } else {
       var startFormat = this.searchAdvertForm.value.startDate.split('T')[0];
       var endFormat = this.searchAdvertForm.value.endDate.split('T')[0];
@@ -48,6 +46,8 @@ export class HomePage {
       this.advertService.setAddress(this.searchAdvertForm.value.address);
       this.advertService.setGuests(this.searchAdvertForm.value.guests);
       this.router.navigateByUrl("/adverts");
+      this.isSubmitted = false;
+      this.searchAdvertForm.reset();
     }
   }
 
