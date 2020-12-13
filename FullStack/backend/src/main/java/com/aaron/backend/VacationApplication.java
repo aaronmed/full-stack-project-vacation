@@ -18,5 +18,4 @@ public class VacationApplication {
 	public GraphQLScalarType date() {
 		return ExtendedScalars.Date;
 	}
-
 }

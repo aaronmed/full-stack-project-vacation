@@ -11,7 +11,7 @@ import com.aaron.backend.entity.models.Advert;
 
 @Service
 public class AdvertServiceImpl implements IAdvertService {
-
+	
 	@Autowired
 	private IAdvertDao advertDao;
 
@@ -44,5 +44,5 @@ public class AdvertServiceImpl implements IAdvertService {
 	public Optional<Advert> getAdvertById(long id) {
 		return advertDao.findById(id);
 	}
-
+	
 }

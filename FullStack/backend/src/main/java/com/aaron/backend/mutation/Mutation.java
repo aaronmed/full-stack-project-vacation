@@ -1,7 +1,7 @@
 package com.aaron.backend.mutation;
 
 import java.time.LocalDate;
-import java.util.List;
+//import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,12 +131,12 @@ public class Mutation implements GraphQLMutationResolver {
 	}
 	
 	public User login(String username, String password) {
-		List<User> users = userService.getAll();
+		/*List<User> users = userService.getAll();
 		for (User u: users) {
 			if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
 				return u;
 			}
-		}
-		return null;
+		}*/
+		return new User();
 	}
 }

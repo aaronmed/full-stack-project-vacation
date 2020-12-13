@@ -1,9 +1,9 @@
 package com.aaron.backend.entity.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.aaron.backend.entity.models.Advert;
 
-public interface IAdvertDao extends JpaRepository<Advert,Long> {
+public interface IAdvertDao extends CrudRepository<Advert,Long> {
 
 }
