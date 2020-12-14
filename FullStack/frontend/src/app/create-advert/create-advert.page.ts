@@ -56,8 +56,6 @@ export class CreateAdvertPage implements OnInit {
     });
   }
 
-
-
   onFormSubmit() {
     if (!this.createAdvertForm.valid) {
       this.isSubmitted = true;

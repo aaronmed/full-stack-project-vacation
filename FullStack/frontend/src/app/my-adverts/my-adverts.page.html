@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  <p id="info" *ngIf="!existAdvert"> No has creado ningún anuncio</p>
   <ion-card *ngFor="let advert of adverts">
     <ion-card-header>
       <ion-card-title>{{advert.description}}</ion-card-title>

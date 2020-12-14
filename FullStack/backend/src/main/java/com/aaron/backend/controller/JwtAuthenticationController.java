@@ -31,7 +31,8 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
-
+	
+	@CrossOrigin(origins = "http://localhost:8100")
 	@RequestMapping(value = "/auth/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto authenticationRequest) throws Exception {
 
@@ -43,7 +44,8 @@ public class JwtAuthenticationController {
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
-
+	
+	@CrossOrigin(origins = "http://localhost:8100")
 	@RequestMapping(value = "/auth/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
 		return ResponseEntity.ok(userDetailsService.save(user));

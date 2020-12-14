@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AdvertsService } from '../services/adverts.service';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -20,8 +20,8 @@ export class HomePage {
 
   constructor(public fb: FormBuilder,
     private router: Router,
-    private advertService: AdvertsService,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    public storage: Storage) {
     this.searchAdvertForm = this.fb.group({
       address: new FormControl('', Validators.required),
       startDate: new FormControl('', Validators.required),
@@ -32,7 +32,11 @@ export class HomePage {
 
   ngOnInit() {
     this.today = new Date().toISOString();
+    this.searchAdvertForm.reset();
+  }
 
+  ionViewWillEnter(){
+    this.searchAdvertForm.reset();
   }
 
   onFormSubmit() {
@@ -42,10 +46,10 @@ export class HomePage {
     } else {
       var startFormat = this.searchAdvertForm.value.startDate.split('T')[0];
       var endFormat = this.searchAdvertForm.value.endDate.split('T')[0];
-      this.advertService.setStartDate(startFormat);
-      this.advertService.setEndDate(endFormat);
-      this.advertService.setAddress(this.searchAdvertForm.value.address);
-      this.advertService.setGuests(this.searchAdvertForm.value.guests);
+      this.storage.set('START_DATE',startFormat);
+      this.storage.set('END_DATE', endFormat);
+      this.storage.set('ADDRESS', this.searchAdvertForm.value.address);
+      this.storage.set('GUESTS', this.searchAdvertForm.value.guests);
       this.router.navigateByUrl("/adverts");
       this.isSubmitted = false;
       this.searchAdvertForm.reset();
@@ -55,6 +59,7 @@ export class HomePage {
   getStartDate() {
     var dateFormat = this.searchAdvertForm.value.startDate.split('T')[0];
     this.minDate = dateFormat;
+    
     this.searchAdvertForm.controls.endDate.setValue(null);
     this.isStartDate = true;
   }

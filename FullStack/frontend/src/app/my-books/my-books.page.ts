@@ -40,6 +40,7 @@ query ($idUser: ID) {
 export class MyBooksPage implements OnInit {
   books: any[];
   iduser: number;
+  existBook = true;
 
   constructor(private apollo: Apollo, 
     private router: Router,
@@ -63,7 +64,9 @@ export class MyBooksPage implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.books = result.data.booksByUser;
-        console.log(this.books);
+        if (this.books.length == 0) {
+          this.existBook = false;
+        }
       });
   }
 

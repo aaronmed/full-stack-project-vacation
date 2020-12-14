@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { AdvertsService } from '../services/adverts.service';
 import { Storage } from '@ionic/storage';
 
 const BOOK_ADVERT = gql`
@@ -18,6 +17,20 @@ mutation ($idUser: Int, $idAdvert: Int, $startDate: String, $endDate: String){
    }
  }
   `;
+
+const SEND_REVIEW = gql`
+mutation ($description: String, $stars: Int, $published: String, $advert: Int){
+  createReview(
+     description: $description,
+     stars: $stars,
+     published: $published,
+     advert: $advert,
+   ){
+     description, stars, published, advert {id}
+   }
+ }
+ `;
+
 const ADVERT = gql`
 query advert($idAdvert: ID){
   advert(id: $idAdvert) {
@@ -70,9 +83,12 @@ export class DetailsPage implements OnInit {
   iduseradvert: number;
   islogin = false;
   propietary = false;
+  today: string;
+  idadvert: number;
+  startdate: string;
+  enddate: string;
 
   constructor(private apollo: Apollo,
-    private advertService: AdvertsService,
     private router: Router,
     private alertController: AlertController,
     public storage: Storage) { }
@@ -83,11 +99,15 @@ export class DetailsPage implements OnInit {
       if (val != null) {
         this.islogin = true;
       }
-    });
-    this.getAdverts();
-    this.getReviews();
-    this.getAverageReview();
-
+      this.storage.get('START_DATE').then((val) => { this.startdate = val; });
+      this.storage.get('END_DATE').then((val) => { this.enddate = val; });
+      this.storage.get('ID_ADVERT').then((val) => {
+        this.idadvert = val;
+        this.getAdverts();
+        this.getReviews();
+        this.getAverageReview();
+      });
+    }); 
   }
 
   returnAdverts() {
@@ -95,12 +115,11 @@ export class DetailsPage implements OnInit {
   }
 
   getAdverts() {
-    let id = this.advertService.getCurrentAdvertId();
     this.apollo
       .watchQuery({
         query: ADVERT,
         variables: {
-          idAdvert: id,
+          idAdvert: this.idadvert,
         },
       })
       .valueChanges.subscribe((result: any) => {
@@ -110,12 +129,11 @@ export class DetailsPage implements OnInit {
   }
 
   getReviews() {
-    let id = this.advertService.getCurrentAdvertId();
     this.apollo
       .watchQuery({
         query: REVIEWS,
         variables: {
-          idAdvert: id,
+          idAdvert: this.idadvert,
         },
       })
       .valueChanges.subscribe((result: any) => {
@@ -125,9 +143,6 @@ export class DetailsPage implements OnInit {
   }
 
   book() {
-    let id = this.advertService.getCurrentAdvertId();
-    let startDate = this.advertService.getStartDate();
-    let endDate = this.advertService.getEndDate();
     if (this.iduser == this.iduseradvert) {
       this.presentCantBook();
     } else {
@@ -135,9 +150,9 @@ export class DetailsPage implements OnInit {
         mutation: BOOK_ADVERT,
         variables: {
           idUser: this.iduser,
-          idAdvert: id,
-          startDate: startDate,
-          endDate: endDate
+          idAdvert: this.idadvert,
+          startDate: this.startdate,
+          endDate: this.enddate
         }
       }).subscribe((res) => {
         this.presentAlert();
@@ -146,13 +161,29 @@ export class DetailsPage implements OnInit {
     }
   }
 
+  sendReview() {
+    this.today = new Date().toISOString().split('T')[0];
+    this.apollo.mutate({
+      mutation: SEND_REVIEW,
+      variables: {
+        description: "A",
+        stars: 2,
+        published: this.today,
+        advert: this.iduser
+      }
+    }).subscribe((res) => {
+      this.presentAlert();
+      this.router.navigateByUrl("/my-books");
+    });
+
+  }
+
   getAverageReview() {
-    let id = this.advertService.getCurrentAdvertId();
     this.apollo
       .watchQuery({
         query: AVERAGE_REVIEWS,
         variables: {
-          idAdvert: id
+          idAdvert: this.iduser
         },
       })
       .valueChanges.subscribe((result: any) => {

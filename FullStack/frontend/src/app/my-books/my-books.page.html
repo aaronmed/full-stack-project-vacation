@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  <p id="info" *ngIf="!existBook"> No has hecho ninguna reserva</p>
   <ion-card *ngFor="let book of books">
     <ion-card-header>
       <ion-card-title>{{book.advert.description}}</ion-card-title>

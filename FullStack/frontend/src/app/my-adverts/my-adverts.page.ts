@@ -41,6 +41,7 @@ const ADVERT_BY_USER = gql`
 export class MyAdvertsPage implements OnInit {
   adverts: any[];
   iduser: number;
+  existAdvert = true;
 
   constructor(
     private apollo: Apollo, 
@@ -56,8 +57,12 @@ export class MyAdvertsPage implements OnInit {
     });
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.getAdverts();
+  }
+
+  ionViewWillLeave() {
+    this.adverts = null;
   }
 
   getAdverts() {
@@ -70,6 +75,9 @@ export class MyAdvertsPage implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.adverts = result.data.advertsByUser;
+        if (this.adverts.length == 0) {
+          this.existAdvert = false;
+        }
       });
   }
 
@@ -80,6 +88,7 @@ export class MyAdvertsPage implements OnInit {
 
   createAdvert() {
     this.router.navigateByUrl("/create-advert");
+    this.adverts = null;
   }
 
   deleteAdvert(id: number) {
@@ -91,7 +100,8 @@ export class MyAdvertsPage implements OnInit {
     }).subscribe(() => {
       this.presentAlert();
       this.getAdverts();
-
+      this.router.navigateByUrl("/my-adverts");
+      console.log(this.adverts);
     });
   }
 

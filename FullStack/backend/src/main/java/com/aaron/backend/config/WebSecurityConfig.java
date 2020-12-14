@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// configure AuthenticationManager so that it knows from where to load
 		// user for matching credentials
 		// Use BCryptPasswordEncoder
-		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+		//auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 	
+	/*
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
@@ -65,6 +66,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// store user's state.
 						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		// Add a filter to validate the tokens with every request
+		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+	}*/
+	
+	@Override
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity
+				// We don't need CSRF for this example
+						.csrf().disable()
+				// Everything starting by /auth/* will have Basic Auth
+//						.antMatcher("/auth/**").httpBasic().and()
+				// dont authenticate this particular request
+						.authorizeRequests().antMatchers("/").permitAll();
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

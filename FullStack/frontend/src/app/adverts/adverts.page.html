@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  <p id="info" *ngIf="!existAdvert"> No hay anuncios que cumplan los parámetros de búsqueda</p>
   <ion-card *ngFor="let advert of adverts" (click)="showDetails(advert.id)">
     <ion-card-header>
       <img src="assets/sevilla.jpg" />

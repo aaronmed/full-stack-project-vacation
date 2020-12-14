@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { AdvertsService } from '../services/adverts.service';
+import gql from 'graphql-tag';;
+import { Storage } from '@ionic/storage';
 
 const GET_ADVERTS = gql`
 query advert($address: String, $guests: Int){
@@ -28,23 +28,28 @@ query advert($address: String, $guests: Int){
 })
 export class AdvertsPage implements OnInit {
   adverts: any[];
+  address: string;
+  guests: string;
+  existAdvert = true;
 
   constructor(private apollo: Apollo,
     private router: Router,
-    private advertService: AdvertsService
-    ) { }
+    public storage: Storage
+  ) { }
 
   ngOnInit() {
-    this.getAdverts();
-  }
-
-  ionViewWillEnter() {
-    this.getAdverts();
+    this.storage.get('ADDRESS').then((val) => {
+      this.address = val;
+      this.storage.get('GUESTS').then((val) => {
+        this.guests = val;
+        this.getAdverts();
+      });
+    });
   }
 
   showDetails(id: number) {
     this.router.navigateByUrl("/details");
-    this.advertService.setCurrentAdvertId(id);
+    this.storage.set('ID_ADVERT', id);
   }
 
 
@@ -53,12 +58,15 @@ export class AdvertsPage implements OnInit {
       .watchQuery({
         query: GET_ADVERTS,
         variables: {
-          address: this.advertService.getAddress(),
-          guests: this.advertService.getGuests()
+          address: this.address,
+          guests: this.guests
         },
       })
       .valueChanges.subscribe((result: any) => {
         this.adverts = result.data.advertFilters;
+        if (this.adverts.length == 0) {
+          this.existAdvert = false;
+        }
       });
   }
 }

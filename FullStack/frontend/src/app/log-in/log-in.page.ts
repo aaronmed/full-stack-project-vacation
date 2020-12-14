@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '../services/authentication.service';
+import { AlertController } from '@ionic/angular';
 
 const CREDENTIALS = gql`
 mutation ($username: String, $password: String){
@@ -32,16 +33,17 @@ export class LogInPage implements OnInit {
 
   @Input() error: string | null;
 
-  constructor(private apollo: Apollo, 
-    public fb: FormBuilder, 
-    private router: Router, 
+  constructor(private apollo: Apollo,
+    public fb: FormBuilder,
+    private router: Router,
     private storage: Storage,
-    private loginservice: AuthenticationService) {
+    private loginservice: AuthenticationService,
+    private alertController: AlertController) {
     this.loginForm = this.fb.group({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-   }
+  }
 
   ngOnInit() {
   }
@@ -51,7 +53,7 @@ export class LogInPage implements OnInit {
       this.isSubmitted = true;
       return false;
     } else {
-      /*this.apollo.mutate({
+      this.apollo.mutate({
         mutation: CREDENTIALS,
         variables: {
           username: this.loginForm.value.username,
@@ -60,16 +62,24 @@ export class LogInPage implements OnInit {
       }).subscribe((res: any) => {
         this.isSubmitted = false;
         this.loginForm.reset();
-        if(res.data.login == null){
-          console.log("No existe");
+        if (res.data.login == null) {
+          this.presentNo();
         } else {
-          this.storage.set('iduser',res.data.login.id);
+          console.log(res.data.login);
+          console.log(res.data.login.id);
+          this.storage.set('iduser', res.data.login.id);
+          this.presentYes();
           this.router.navigateByUrl("/home");
         }
-      });*/
-      this.checkLogin();
+      });
+      //this.checkLogin();
     }
   }
+
+  ionViewWillEnter() {
+    this.loginForm.reset();
+  }
+
 
   checkLogin() {
     (this.loginservice.authenticate(this.loginForm.value.username, this.loginForm.value.password).subscribe(
@@ -88,7 +98,29 @@ export class LogInPage implements OnInit {
 
   }
 
-  register(){
+  register() {
     this.router.navigateByUrl("/register");
+  }
+
+  async presentNo() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'No corresponde con ningún usuario/contraseña',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentYes() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Inicio de sesión satisfactorio.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
