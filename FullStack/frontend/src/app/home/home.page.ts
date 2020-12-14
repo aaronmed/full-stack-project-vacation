@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',

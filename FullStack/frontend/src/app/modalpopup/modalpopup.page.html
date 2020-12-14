@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="createReviewForm" (ngSubmit)="onFormSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Crítica</ion-label>
+      <ion-input formControlName="review" type="text" placeholder="Estaba muy bien ubicado" ngModel required></ion-input>
+      <span class="error ion-padding" *ngIf="isSubmitted">
+        Crítica es requerida.
+      </span>
+    </ion-item>
+    <ion-item>
+      <ion-select formControlName="stars" placeholder="Estrellas">
+        <ion-select-option value="0">0</ion-select-option>
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+        <ion-select-option value="3">3</ion-select-option>
+        <ion-select-option value="4">4</ion-select-option>
+        <ion-select-option value="5">5</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <div padding>
+      <ion-button type="submit" color="success" expand="block">Crear</ion-button>
+      <ion-button color="success" expand="block" (click)="closeModal()">Cancelar</ion-button>
+    </div>
+  </form>
+</ion-content>

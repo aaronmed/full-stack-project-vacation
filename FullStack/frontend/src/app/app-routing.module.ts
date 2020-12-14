@@ -43,6 +43,11 @@ const routes: Routes = [
     path: 'update-advert',
     loadChildren: () => import('./update-advert/update-advert.module').then( m => m.UpdateAdvertPageModule)
   },
+  {
+    path: 'modalpopup',
+    loadChildren: () => import('./modalpopup/modalpopup.module').then( m => m.ModalpopupPageModule)
+  },
+
 
 ];
 

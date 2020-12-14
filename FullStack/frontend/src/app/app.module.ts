@@ -11,11 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { ModalpopupPageModule } from './modalpopup/modalpopup.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, GraphQLModule, HttpClientModule, IonicStorageModule.forRoot(),],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, GraphQLModule, HttpClientModule, IonicStorageModule.forRoot(), ModalpopupPageModule ],
   providers: [
     StatusBar,
     SplashScreen,

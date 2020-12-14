@@ -4,6 +4,8 @@ import { AlertController } from '@ionic/angular';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { Storage } from '@ionic/storage';
+import { ModalController } from '@ionic/angular';
+import { ModalpopupPage } from '../modalpopup/modalpopup.page';
 
 const BOOK_ADVERT = gql`
 mutation ($idUser: Int, $idAdvert: Int, $startDate: String, $endDate: String){
@@ -17,19 +19,6 @@ mutation ($idUser: Int, $idAdvert: Int, $startDate: String, $endDate: String){
    }
  }
   `;
-
-const SEND_REVIEW = gql`
-mutation ($description: String, $stars: Int, $published: String, $advert: Int){
-  createReview(
-     description: $description,
-     stars: $stars,
-     published: $published,
-     advert: $advert,
-   ){
-     description, stars, published, advert {id}
-   }
- }
- `;
 
 const ADVERT = gql`
 query advert($idAdvert: ID){
@@ -91,7 +80,8 @@ export class DetailsPage implements OnInit {
   constructor(private apollo: Apollo,
     private router: Router,
     private alertController: AlertController,
-    public storage: Storage) { }
+    public storage: Storage,
+    private modalController: ModalController) { }
 
   ngOnInit() {
     this.storage.get('iduser').then((val) => {
@@ -107,7 +97,7 @@ export class DetailsPage implements OnInit {
         this.getReviews();
         this.getAverageReview();
       });
-    }); 
+    });
   }
 
   returnAdverts() {
@@ -138,7 +128,6 @@ export class DetailsPage implements OnInit {
       })
       .valueChanges.subscribe((result: any) => {
         this.reviews = result.data.advertReviews;
-        console.log(this.reviews);
       });
   }
 
@@ -161,34 +150,16 @@ export class DetailsPage implements OnInit {
     }
   }
 
-  sendReview() {
-    this.today = new Date().toISOString().split('T')[0];
-    this.apollo.mutate({
-      mutation: SEND_REVIEW,
-      variables: {
-        description: "A",
-        stars: 2,
-        published: this.today,
-        advert: this.iduser
-      }
-    }).subscribe((res) => {
-      this.presentAlert();
-      this.router.navigateByUrl("/my-books");
-    });
-
-  }
-
   getAverageReview() {
     this.apollo
       .watchQuery({
         query: AVERAGE_REVIEWS,
         variables: {
-          idAdvert: this.iduser
+          idAdvert: this.idadvert
         },
       })
       .valueChanges.subscribe((result: any) => {
         this.average = result.data.advertAverageReviews;
-        console.log(result.data.advertAverageReviews);
       });
   }
 
@@ -212,5 +183,26 @@ export class DetailsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async presentCantReview() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'No puede enviar críticas de su propio anuncio.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  openModal() {
+    if (this.iduser == this.iduseradvert) {
+      this.presentCantReview();
+    } else {
+      this.modalController.create({ component: ModalpopupPage }).then((modalElement) => {
+        modalElement.present();
+      });
+    }
   }
 }

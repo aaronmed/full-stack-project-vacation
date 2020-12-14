@@ -14,7 +14,7 @@
       <ion-card-title>{{adverts.description}}</ion-card-title>
       <ion-card-subtitle><strong>Dirección:</strong> {{adverts.address}}</ion-card-subtitle>
       <ion-card-subtitle><strong>Precio:</strong> {{adverts.price}}€ por noche</ion-card-subtitle>
-      <ion-card-subtitle><strong>Publicado:</strong>  {{adverts.published}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Publicado:</strong> {{adverts.published}}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
@@ -43,14 +43,12 @@
       <ion-card-subtitle><strong>Descripción:</strong> {{review.description}}</ion-card-subtitle>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngIf="islogin && !propietary">
-    <ion-input placeholder="Nueva crítica"></ion-input>
-    <ion-button color="success" expand="block" (click)="sendReview()">Enviar crítica</ion-button>
-  </ion-card>
+  <ion-button *ngIf="islogin" color="success" expand="block" (click)="openModal()">Enviar crítica</ion-button>
 </ion-content>
 
-<ion-footer *ngIf="adverts && islogin && !propietary">
+<ion-footer *ngIf="adverts && islogin">
   <ion-toolbar>
-    <span id="price">{{adverts.price}}€ por noche</span> <ion-button color="success" id="book" (click)="book()">Reservar</ion-button>
+    <span id="price">{{adverts.price}}€ por noche</span>
+    <ion-button color="success" id="book" (click)="book()">Reservar</ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -57,14 +57,6 @@ export class MyAdvertsPage implements OnInit {
     });
   }
 
-  ionViewDidEnter() {
-    this.getAdverts();
-  }
-
-  ionViewWillLeave() {
-    this.adverts = null;
-  }
-
   getAdverts() {
     this.apollo
       .watchQuery({

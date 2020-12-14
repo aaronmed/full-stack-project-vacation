@@ -69,10 +69,11 @@ export class LogInPage implements OnInit {
           console.log(res.data.login.id);
           this.storage.set('iduser', res.data.login.id);
           this.presentYes();
-          this.router.navigateByUrl("/home");
+          this.router.navigateByUrl("/home").then( () =>{
+            location.reload();
+          });
         }
       });
-      //this.checkLogin();
     }
   }
 
