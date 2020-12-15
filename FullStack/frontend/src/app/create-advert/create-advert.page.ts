@@ -78,8 +78,9 @@ export class CreateAdvertPage implements OnInit {
       }).subscribe((res) => {
         this.presentAlert();
         this.isSubmitted = false;
-        
         this.router.navigateByUrl("/my-adverts");
+      }, (error) =>{
+        this.presentAlertError();
       });
     }
   }
@@ -101,6 +102,17 @@ export class CreateAdvertPage implements OnInit {
           location.reload();
         }
       }]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Error de conexión con la base de datos.',
+      buttons: ['OK']
     });
 
     await alert.present();

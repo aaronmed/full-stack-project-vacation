@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';;
 import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
 
 const GET_ADVERTS = gql`
 query advert($address: String, $guests: Int){
@@ -34,7 +35,8 @@ export class AdvertsPage implements OnInit {
 
   constructor(private apollo: Apollo,
     private router: Router,
-    public storage: Storage
+    public storage: Storage,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -67,6 +69,19 @@ export class AdvertsPage implements OnInit {
         if (this.adverts.length == 0) {
           this.existAdvert = false;
         }
+      }, (error) =>{
+        this.presentAlertError();
       });
+  }
+
+  async presentAlertError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Error de conexión con la base de datos.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="users">
+    <ion-card-header>
+      <ion-card-subtitle><strong>Nombre de usuario: </strong>{{users.username}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Nombre: </strong>{{users.name}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Apellidos: </strong>{{users.surname}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>DNI: </strong>{{users.dni}}</ion-card-subtitle>
+      <ion-card-subtitle><strong>Teléfono: </strong>{{users.telephone}}</ion-card-subtitle>
+      <ion-item>
+        <ion-icon (click)="updateUser()" name="create-outline" slot="end"></ion-icon>
+        <ion-icon (click)="deleteUser(users.id)" name="trash-outline" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card-header>
+  </ion-card>
+</ion-content>

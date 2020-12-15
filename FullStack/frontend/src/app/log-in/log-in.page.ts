@@ -69,6 +69,8 @@ export class LogInPage implements OnInit {
             this.presentYes();
           });
         }
+      }, (error) =>{
+        this.presentAlertError();
       });
     }
   }
@@ -88,7 +90,6 @@ export class LogInPage implements OnInit {
         this.invalidLogin = true
         this.error = error.message;
         console.log("Fuera")
-
       }
     )
     );
@@ -122,6 +123,17 @@ export class LogInPage implements OnInit {
           });
         }
       }]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Error de conexión con la base de datos.',
+      buttons: ['OK']
     });
 
     await alert.present();

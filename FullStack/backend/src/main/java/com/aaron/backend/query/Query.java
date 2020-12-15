@@ -132,4 +132,20 @@ public class Query implements GraphQLQueryResolver {
 		}
 		return advertsByUser;
 	}
+	
+	public boolean checkUserDelete(int idUser) {
+		List<Advert> allAdverts = advertService.getAll();
+		List<Book> allBooks = bookService.getAll();
+		for (Advert a : allAdverts) {
+			if (a.getUser().getId() == idUser) {
+				return false;
+			}
+		}
+		for (Book b : allBooks) {
+			if (b.getUser().getId() == idUser) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

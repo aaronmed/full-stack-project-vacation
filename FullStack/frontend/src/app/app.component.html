@@ -16,6 +16,9 @@
             <ion-item detail="false" (click)="login()" *ngIf="isLogin">
               Iniciar sesión
             </ion-item>
+            <ion-item detail="false" (click)="profile()" *ngIf="!isLogin">
+              Perfil
+            </ion-item>
             <ion-item detail="false" (click)="logout()" *ngIf="!isLogin">
               Cerrar sesión
             </ion-item>

@@ -54,6 +54,7 @@ type Query {
 	advertAverageReviews(id: ID): String
 	booksByUser(id: ID): [Book]
 	advertsByUser(id: ID): [Advert]
+	checkUserDelete(id: ID): Boolean
 }
 
 type Mutation {

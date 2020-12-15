@@ -66,6 +66,10 @@ export class AppComponent {
     this.router.navigateByUrl("/log-in");
   }
 
+  profile() {
+    this.router.navigateByUrl("/profile");
+  }
+
   logout() {
     this.storage.remove('iduser');
     this.isLogin = true;

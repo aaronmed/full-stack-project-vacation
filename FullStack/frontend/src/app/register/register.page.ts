@@ -66,6 +66,8 @@ export class RegisterPage implements OnInit {
         this.isSubmitted = false;
         this.presentAlert();
         this.router.navigateByUrl("/home");
+      }, (error) =>{
+        this.presentAlertError();
       });
     }
   }
@@ -75,6 +77,17 @@ export class RegisterPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Aviso',
       message: 'Usuario nuevo registrado.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Aviso',
+      message: 'Error de conexión con la base de datos.',
       buttons: ['OK']
     });
 
