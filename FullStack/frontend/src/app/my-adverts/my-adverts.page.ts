@@ -44,9 +44,9 @@ export class MyAdvertsPage implements OnInit {
   existAdvert = true;
 
   constructor(
-    private apollo: Apollo, 
-    private router: Router, 
-    private advertService: AdvertsService, 
+    private apollo: Apollo,
+    private router: Router,
+    private advertService: AdvertsService,
     public alertController: AlertController,
     public storage: Storage) { }
 
@@ -80,7 +80,6 @@ export class MyAdvertsPage implements OnInit {
 
   createAdvert() {
     this.router.navigateByUrl("/create-advert");
-    this.adverts = null;
   }
 
   deleteAdvert(id: number) {
@@ -91,9 +90,6 @@ export class MyAdvertsPage implements OnInit {
       }
     }).subscribe(() => {
       this.presentAlert();
-      this.getAdverts();
-      this.router.navigateByUrl("/my-adverts");
-      console.log(this.adverts);
     });
   }
 
@@ -102,7 +98,14 @@ export class MyAdvertsPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Aviso',
       message: 'Anuncio borrado.',
-      buttons: ['OK']
+      buttons: [{
+        text: 'OK',
+        handler: (blah) => {
+          this.getAdverts();
+          this.router.navigateByUrl("/my-adverts");
+          location.reload();
+        }
+      }]
     });
 
     await alert.present();

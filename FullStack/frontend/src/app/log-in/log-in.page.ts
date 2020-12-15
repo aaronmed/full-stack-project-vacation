@@ -65,12 +65,8 @@ export class LogInPage implements OnInit {
         if (res.data.login == null) {
           this.presentNo();
         } else {
-          console.log(res.data.login);
-          console.log(res.data.login.id);
-          this.storage.set('iduser', res.data.login.id);
-          this.presentYes();
-          this.router.navigateByUrl("/home").then( () =>{
-            location.reload();
+          this.storage.set('iduser', res.data.login.id).then(() => {
+            this.presentYes();
           });
         }
       });
@@ -119,7 +115,13 @@ export class LogInPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Aviso',
       message: 'Inicio de sesión satisfactorio.',
-      buttons: ['OK']
+      buttons: [{
+        text: 'OK', handler: () => {
+          this.router.navigateByUrl("/home").then(() => {
+            location.reload();
+          });
+        }
+      }]
     });
 
     await alert.present();

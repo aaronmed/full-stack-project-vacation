@@ -78,7 +78,7 @@ export class CreateAdvertPage implements OnInit {
       }).subscribe((res) => {
         this.presentAlert();
         this.isSubmitted = false;
-        this.createAdvertForm.reset();
+        
         this.router.navigateByUrl("/my-adverts");
       });
     }
@@ -93,7 +93,14 @@ export class CreateAdvertPage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Aviso',
       message: 'Anuncio creado.',
-      buttons: ['OK']
+      buttons: [{
+        text:'OK',
+        handler: (blah) => {
+          this.createAdvertForm.reset();
+          this.router.navigateByUrl("/my-adverts");
+          location.reload();
+        }
+      }]
     });
 
     await alert.present();

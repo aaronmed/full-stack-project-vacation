@@ -225,7 +225,8 @@ A simple application in which users will be able to view advertisements for holi
     Ionic is a complete open-source SDK for hybrid mobile app development.
     Provides tools and services for developing hybrid mobile, desktop, and Progressive Web Apps based on modern web development technologies and practices, using Web technologies like CSS, HTML5, and Sass. In particular, mobile apps can be built with these Web technologies and then distributed through native app stores to be installed on devices by utilizing Cordova or Capacitor.
 
-
+## Technology comparison
+<img src="images/comparative.png" alt="Comparative">
 
 <!-- GETTING STARTED -->
 ## Getting Started

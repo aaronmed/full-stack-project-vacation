@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
 import { AdvertsService } from '../services/adverts.service';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 const ADVERT = gql`
 query advert($idAdvert: ID){
@@ -26,7 +27,7 @@ query advert($idAdvert: ID){
 `;
 
 const UPDATE_ADVERT = gql`
-mutation ($id: ID, $description: String, $address: String, $published: String, $price: Float, $guests: Int, $bathrooms: Int, $bedrooms: Int, $beds: Int){
+mutation ($id: ID, $description: String, $address: String, $published: String, $price: Float, $guests: Int, $bathrooms: Int, $bedrooms: Int, $beds: Int, $user: Int){
   updateAdvert(
     id: $id,
     description: $description,
@@ -37,7 +38,7 @@ mutation ($id: ID, $description: String, $address: String, $published: String, $
     bathrooms: $bathrooms,
     bedrooms: $bedrooms,
     beds: $beds,
-    user: 1
+    user: $user
    ){
     description address published price guests bathrooms bedrooms beds user {id}
    }
@@ -55,8 +56,14 @@ export class UpdateAdvertPage implements OnInit {
   published: any;
   id: any;
   isSubmitted = false;
+  iduser: number;
 
-  constructor(private apollo: Apollo, public fb: FormBuilder, private router: Router, private advertService: AdvertsService, public alertController: AlertController) {
+  constructor(private apollo: Apollo,
+    public fb: FormBuilder,
+    private router: Router,
+    private advertService: AdvertsService,
+    public alertController: AlertController,
+    private storage: Storage) {
     this.updateAdvertForm = this.fb.group({
       description: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
@@ -70,27 +77,30 @@ export class UpdateAdvertPage implements OnInit {
 
   ngOnInit() {
     let id = this.advertService.getCurrentAdvertId();
-    this.apollo
-      .watchQuery({
-        query: ADVERT,
-        variables: {
-          idAdvert: id,
-        },
-      })
-      .valueChanges.subscribe((result: any) => {
-        this.adverts = result.data.advert;
-        this.published = result.data.advert.published;
-        this.id = result.data.advert.id;
-        this.updateAdvertForm = this.fb.group({
-          description: result.data.advert.description,
-          address: result.data.advert.address,
-          price: result.data.advert.price,
-          guests: result.data.advert.guests,
-          bathrooms: result.data.advert.bathrooms,
-          bedrooms: result.data.advert.bedrooms,
-          beds: result.data.advert.beds
+    this.storage.get('iduser').then((val) => {
+      this.iduser = val;
+      this.apollo
+        .watchQuery({
+          query: ADVERT,
+          variables: {
+            idAdvert: id,
+          },
+        })
+        .valueChanges.subscribe((result: any) => {
+          this.adverts = result.data.advert;
+          this.published = result.data.advert.published;
+          this.id = result.data.advert.id;
+          this.updateAdvertForm = this.fb.group({
+            description: result.data.advert.description,
+            address: result.data.advert.address,
+            price: result.data.advert.price,
+            guests: result.data.advert.guests,
+            bathrooms: result.data.advert.bathrooms,
+            bedrooms: result.data.advert.bedrooms,
+            beds: result.data.advert.beds,
+          });
         });
-      });
+    });
   }
 
   cancelAdvert() {
@@ -114,13 +124,16 @@ export class UpdateAdvertPage implements OnInit {
           bathrooms: this.updateAdvertForm.value.bathrooms,
           bedrooms: this.updateAdvertForm.value.bedrooms,
           beds: this.updateAdvertForm.value.beds,
-          user: 1
+          user: this.iduser
         }
       }).subscribe((res) => {
+        console.log(res);
         this.isSubmitted = false;
         this.updateAdvertForm.reset();
         this.presentAlert();
-        this.router.navigateByUrl("/my-adverts");
+        this.router.navigateByUrl("/my-adverts").then( () =>{
+          location.reload();
+        });
       });
     }
   }

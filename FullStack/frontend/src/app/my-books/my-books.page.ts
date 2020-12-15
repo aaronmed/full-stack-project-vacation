@@ -97,7 +97,9 @@ export class MyBooksPage implements OnInit {
               }
             }).subscribe((res) => {
               this.presentAlertYes();
-              this.router.navigateByUrl("/my-books");
+              this.router.navigateByUrl("/my-books").then( () =>{
+                location.reload();
+              });;
               this.getBooks();
             });
           }
