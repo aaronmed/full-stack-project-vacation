@@ -75,4 +75,8 @@ export class AppComponent {
     this.isLogin = true;
     this.router.navigateByUrl("/log-in");
   }
+
+  goUrl(){
+    window.open("https://github.com/aaronmed/full-stack-project-vacation/wiki", "_blank");
+  }
 }

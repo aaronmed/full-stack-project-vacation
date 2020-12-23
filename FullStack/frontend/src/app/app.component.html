@@ -22,6 +22,9 @@
             <ion-item detail="false" (click)="logout()" *ngIf="!isLogin">
               Cerrar sesión
             </ion-item>
+            <ion-item (click)="goUrl()" detail="false">
+              Wiki
+            </ion-item>
             <ion-item>
               <ion-toggle (ionChange)='toggleTheme($event)'></ion-toggle>
             </ion-item>
